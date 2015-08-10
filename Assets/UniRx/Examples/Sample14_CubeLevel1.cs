@@ -42,6 +42,7 @@ namespace Assets.UniRx.Examples
             Number = new ReactiveProperty<float>(argument);
             Number.Subscribe(x =>
             {
+                Debug.Log("Level 1:" + x);
                 child1.Number.Value = x;
                 child2.Number.Value = x;
                 this.GetComponent<Renderer>().material.color = new Color(0.2f, x, 0.2f, 0);

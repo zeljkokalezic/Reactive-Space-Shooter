@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public interface ITest { }
+
+public class InterfaceImplementationTest : MonoBehaviour, ITest {
 
 	// Use this for initialization
 	void Start () {

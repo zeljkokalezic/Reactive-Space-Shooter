@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Powerup : MonoBehaviour {
+public class EnemyController : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Start () {

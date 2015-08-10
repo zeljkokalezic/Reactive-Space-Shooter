@@ -70,7 +70,7 @@ namespace Assets.UniRx.Examples
 
     public static class AnimationMarker
     {
-        const int AnimationSpeed = 10;
+        const int AnimationSpeed = 1;
 
         static int Count = 0;
 
