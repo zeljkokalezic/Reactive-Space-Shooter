@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UniRx;
 
-public class PlayerModel : MonoBehaviour
+public class PlayerModel
 {
+    public ReactiveProperty<string> PlayerName { get; private set; }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public PlayerModel()
+    {
+        PlayerName = new ReactiveProperty<string>(string.Empty);
+    }
+
+    internal void ChangeName(string p)
+    {
+        PlayerName.Value = p;
+    }
 }

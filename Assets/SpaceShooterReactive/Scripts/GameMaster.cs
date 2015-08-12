@@ -15,11 +15,16 @@ public class GameMaster : Singleton<GameMaster>
     void Awake()
     {
         // Your initialization code here
+        //initialize game model - handle spawning & game over
+        //initialize player model
+        //initialize player weapon model
+        //initilaize asteroid model(s) - on spawn
     }
 
+    //moved to the singleton
     // (optional) allow runtime registration of global objects
-    static public T RegisterComponent<T>() where T : Component
-    {
-        return I.GetOrAddComponent<T>();
-    }
+    //static public T RegisterComponent<T>() where T : Component
+    //{
+    //    return I.GetOrAddComponent<T>();
+    //}
 }
