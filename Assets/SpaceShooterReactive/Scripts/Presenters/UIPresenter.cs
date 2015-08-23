@@ -3,32 +3,41 @@ using System.Collections;
 using UnityEngine.UI;
 using UniRx;
 using System;
+using Zenject;
+using UnityEngine.Assertions;
 
 public class UIPresenter : MonoBehaviour
 {
 
-    public Button MyButton;
+    public Button actionButton;
+    public Text infoLabel;
 
     //cashe the reference ?
-    private PlayerModel Player { get { return ModelRegistry.I.GetModel<PlayerModel>("player");}}
+    //service locator pattern test
+    [Inject]
+    private PlayerModel player;//{ get { return ModelRegistry.I.GetModel<PlayerModel>("player");}}
 
-	// Use this for initialization
-	void Start () {
-        Player.PlayerName.Subscribe(x => Debug.Log(x));
+    [Inject]
+    private GameModel game;
 
-        MyButton.onClick.AsObservable().Subscribe(_ =>
-            { 
-                ////Debug.Log(GameMaster.I.name);                
-                ////GameMaster.I.GetOrAddComponent<PlayerModel>();
-                //var player = ModelRegistry.I.GetModel<PlayerModel>("player");
-                Player.ChangeName(DateTime.Now.ToString());
-                //Debug.Log(ModelRegistry.I.GetModel<PlayerModel>("player"));
-            });
+    // Use this for initialization
+    [PostInject]
+    void InitializePresenter()
+    {
+        Assert.IsNotNull(actionButton);
+        Assert.IsNotNull(infoLabel);
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        player.RxPlayerName.Subscribe(x => infoLabel.text = "Welcome " + x).AddTo(this);
+
+        //player.RxPlayerFireRate.Subscribe(x => Debug.Log(x)).AddTo(this);
+
+        actionButton.onClick.AsObservable().Subscribe(_ =>
+        {
+            infoLabel.enabled = false;
+            actionButton.Visible(false);
+            game.StartGame();
+        }).AddTo(this);
+    }
+
+    
 }

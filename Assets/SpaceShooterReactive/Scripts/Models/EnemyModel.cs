@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using Zenject;
 
-public class EnemyModel : MonoBehaviour {
+public class EnemyModel
+{
+    [Serializable]
+    public class Settings
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+
 }

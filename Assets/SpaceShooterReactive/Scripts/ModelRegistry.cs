@@ -44,6 +44,9 @@ public class ModelRegistry : Singleton<ModelRegistry>
         var registryEntry = I.models.Where(x => x.ModelID == id).FirstOrDefault();
         if (registryEntry == null)
         {
+            //this can be transformed into basic dependency injection bu creating inject extension for mono behavours
+            //and by creating [Inject] attribute, so the activator shoud now go recursively into creating all dependencies for the model
+            //marked with [Inject] attribute
             result = Activator.CreateInstance<T>();//new T();
             I.models.Add(new ModelRegistryEntry() {
                 ModelID = id,
