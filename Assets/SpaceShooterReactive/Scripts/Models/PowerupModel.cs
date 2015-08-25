@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UniRx;
+using System;
+using Zenject;
 
-public class PowerupModel : MonoBehaviour
+public class PowerupModel
 {
+    [Serializable]
+    public class Settings
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
 }

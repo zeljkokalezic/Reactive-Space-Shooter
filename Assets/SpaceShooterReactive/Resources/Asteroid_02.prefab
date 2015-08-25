@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11458390}
   - 136: {fileID: 13673780}
   m_Layer: 0
-  m_Name: Asteroid Test 3
+  m_Name: Asteroid_02
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,18 +13,24 @@ public class PlayerPresenter : MonoBehaviour {
     public float tilt;
     public Done_Boundary boundary;
 
-    public GameObject shot;
+    //public GameObject shot;
     public Transform shotSpawn;
 
     [Inject]
     private PlayerModel player;
-    //move this to weapon model
-    private float nextFire;
+
+    [Inject]
+    private WeaponSpawner weaponSpawner;
 
     [PostInject]
-    void InitializePresenter()
+    void InitializePresenter()//WeaponSpawner weaponSpawner, PlayerModel player)
     {
         Assert.IsNotNull(player);
+
+        //player model should be injected into weapon spawner -> DONE
+        //Assert.IsNotNull(weaponSpawner);
+        //dont do this ! -> weapon model should determine where the weapon is mounted
+        //weaponSpawner.mountPosition = shotSpawn;
 
         //this can be ship driver component of the player
         this.gameObject.AddComponent<ObservableFixedUpdateTrigger>()
@@ -49,18 +55,6 @@ public class PlayerPresenter : MonoBehaviour {
 
                         GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
                     }                    
-                });
-
-        //this can be weapon component of the player
-        this.gameObject.AddComponent<ObservableUpdateTrigger>()
-                .UpdateAsObservable()                
-                .Where(_ => player.RxPlayerState.Value == PlayerModel.PlayerState.Active 
-                    && Input.GetButton("Fire1")
-                    && Time.time > nextFire)//next fire should be a weapon property
-                .Subscribe(x =>
-                {                    
-                    Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-                    nextFire = Time.time + player.RxPlayerFireRate.Value;
                 });        
     }
 }

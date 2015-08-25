@@ -12,10 +12,8 @@ public class UIPresenter : MonoBehaviour
     public Button actionButton;
     public Text infoLabel;
 
-    //cashe the reference ?
-    //service locator pattern test
     [Inject]
-    private PlayerModel player;//{ get { return ModelRegistry.I.GetModel<PlayerModel>("player");}}
+    private PlayerModel player;
 
     [Inject]
     private GameModel game;

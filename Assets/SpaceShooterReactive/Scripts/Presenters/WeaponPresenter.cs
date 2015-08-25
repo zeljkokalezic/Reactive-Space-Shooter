@@ -7,50 +7,44 @@ using Zenject;
 using UnityEngine.Assertions;
 using UniRx.Triggers;
 
-public class EnemyPresenter : MonoBehaviour
+public class WeaponPresenter : MonoBehaviour
 {
-    public class Factory : GameObjectFactory<EnemyPresenter>
+    public class Factory : GameObjectFactory<WeaponPresenter.Settings, WeaponPresenter>
     {
     }
 
     [Serializable]
     public class Settings
     {
-        //set transform here
-        //move this to the enemy, or to the spawner ?
-        public Vector3 spawnPosition;
+        //move to weapon model ?
+        public Transform mountPosition;
     }
 
     [Inject]
     private Settings settings;
 
-    [Inject]
-    private PlayerModel player;
-
-    //[InjectOptional]
-    //private int test;
-
     //[Inject]
-    //private GameModel game;
+    //private PlayerModel player;
 
     // Use this for initialization
     [PostInject]
-    void InitializePresenter()
+    void InitializePresenter()//Settings settings, PlayerModel player)
     {
-        //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there <- THIS
-        this.transform.position = new Vector3(UnityEngine.Random.Range(-settings.spawnPosition.x, settings.spawnPosition.x), settings.spawnPosition.y, settings.spawnPosition.z);
+        //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there ?
+        this.transform.position = 
+            //new Vector3(UnityEngine.Random.Range(-settings.mountPosition.position.x, settings.mountPosition.position.x), settings.mountPosition.position.y, settings.mountPosition.position.z);
+            settings.mountPosition.position;
 
         this.gameObject.AddComponent<ObservableCollisionTrigger>()
                 .OnTriggerEnterAsObservable()
                 .Subscribe(x =>
                 {
-                    ////Debug.Log(x);
                     //if (x.GetComponent<Done_DestroyByBoundary>() != null)
                     //{
                     //    return;
                     //}
-                    //for test only
-                    //player.RxPlayerFireRate.Value -= 0.05f;
+
+                    Destroy(x.gameObject);
                     Destroy(this.gameObject);
                 }).AddTo(this);
 
@@ -60,8 +54,6 @@ public class EnemyPresenter : MonoBehaviour
                Destroy(this.gameObject);
            })
            .AddTo(this);
-
-        //Debug.Log(test);
     }
 
     

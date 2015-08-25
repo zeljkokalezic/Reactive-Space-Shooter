@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UniRx;
+using System;
+using Zenject;
 
-public class WeaponModel : MonoBehaviour
+public class WeaponModel
 {
+    [Serializable]
+    public class Settings
+    {
+        public Transform weaponMountPoint;
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public ReactiveProperty<Transform> RxPlayerWeaponMountPoint { get; private set; }
+
+    [Inject]
+    public WeaponModel(Settings playerSettings)
+    {
+        RxPlayerWeaponMountPoint = new ReactiveProperty<Transform>(playerSettings.weaponMountPoint);
+    }
 }
