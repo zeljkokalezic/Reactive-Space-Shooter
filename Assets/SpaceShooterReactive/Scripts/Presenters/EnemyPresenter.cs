@@ -16,6 +16,7 @@ public class EnemyPresenter : MonoBehaviour
     [Serializable]
     public class Settings
     {
+        //move this to the enemy ?
         public Vector3 spawnPosition;
     }
 
@@ -24,6 +25,9 @@ public class EnemyPresenter : MonoBehaviour
 
     [Inject]
     private PlayerModel player;
+
+    //[InjectOptional]
+    //private int test;
 
     //[Inject]
     //private GameModel game;
@@ -54,7 +58,8 @@ public class EnemyPresenter : MonoBehaviour
                Destroy(this.gameObject);
            })
            .AddTo(this);
-                
+
+        //Debug.Log(test);
     }
 
     

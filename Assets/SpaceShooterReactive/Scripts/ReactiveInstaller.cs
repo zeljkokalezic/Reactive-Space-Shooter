@@ -14,6 +14,8 @@ public class ReactiveInstaller : MonoInstaller{
         Container.Bind<EnemyPresenter.Settings>().ToSingleInstance(SceneSettings.enemyPresenterSettings).WhenInjectedInto<EnemyPresenter>();
         Container.Bind<GameModel>().ToSingle();
         Container.Bind<EnemyModel>().ToTransient();
+        //we can pass a parameter here and bind the factory to method that will return the apropriate prefab - not good idea
+        //bind to default prefab
         Container.BindGameObjectFactory<EnemyPresenter.Factory>(SceneSettings.asteroidPrefab);
     }
 
