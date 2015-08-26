@@ -13,7 +13,6 @@ GameObject:
   - 54: {fileID: 5411324}
   - 64: {fileID: 6483944}
   - 114: {fileID: 11488888}
-  - 114: {fileID: 11403006}
   - 82: {fileID: 8288846}
   m_Layer: 0
   m_Name: PlayerPresenter
@@ -278,19 +277,6 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!114 &11403006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d6c5f44571c6e4892b179fc05f4181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
-  mountPosition: {fileID: 449922}
 --- !u!114 &11488888
 MonoBehaviour:
   m_ObjectHideFlags: 1

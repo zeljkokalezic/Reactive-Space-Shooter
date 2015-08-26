@@ -11,6 +11,7 @@ public class UIPresenter : MonoBehaviour
 
     public Button actionButton;
     public Text infoLabel;
+    public Text scoreLabel;
 
     [Inject]
     private PlayerModel player;
@@ -25,12 +26,17 @@ public class UIPresenter : MonoBehaviour
         Assert.IsNotNull(actionButton);
         Assert.IsNotNull(infoLabel);
 
+
+        scoreLabel.enabled = false;
+        player.RxPlayerScore.Subscribe(x => scoreLabel.text = "Score: " + x).AddTo(this);
+
         player.RxPlayerName.Subscribe(x => infoLabel.text = "Welcome " + x).AddTo(this);
 
         //player.RxPlayerFireRate.Subscribe(x => Debug.Log(x)).AddTo(this);
 
         actionButton.onClick.AsObservable().Subscribe(_ =>
         {
+            scoreLabel.enabled = true;
             infoLabel.enabled = false;
             actionButton.Visible(false);
             game.StartGame();

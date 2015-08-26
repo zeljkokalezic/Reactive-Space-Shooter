@@ -17,15 +17,16 @@ public class PlayerPresenter : MonoBehaviour {
     public Transform shotSpawn;
 
     [Inject]
-    private PlayerModel player;
+    private PlayerModel Model;
 
+    //switch to factory later
     [Inject]
     private WeaponSpawner weaponSpawner;
 
     [PostInject]
     void InitializePresenter()//WeaponSpawner weaponSpawner, PlayerModel player)
     {
-        Assert.IsNotNull(player);
+        Assert.IsNotNull(Model);
 
         //player model should be injected into weapon spawner -> DONE
         //Assert.IsNotNull(weaponSpawner);
@@ -35,7 +36,7 @@ public class PlayerPresenter : MonoBehaviour {
         //this can be ship driver component of the player
         this.gameObject.AddComponent<ObservableFixedUpdateTrigger>()
                 .FixedUpdateAsObservable()
-                .Where(_ => player.RxPlayerState.Value == PlayerModel.PlayerState.Active)
+                .Where(_ => Model.RxPlayerState.Value == PlayerModel.PlayerState.Active)
                 .Subscribe(x =>
                 {
                     //if (player.RxPlayerState.Value == PlayerModel.PlayerState.Active)
@@ -44,7 +45,7 @@ public class PlayerPresenter : MonoBehaviour {
                         float moveVertical = Input.GetAxis("Vertical");
 
                         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-                        GetComponent<Rigidbody>().velocity = movement * player.RxPlayerSpeed.Value;
+                        GetComponent<Rigidbody>().velocity = movement * Model.RxPlayerSpeed.Value;
 
                         GetComponent<Rigidbody>().position = new Vector3
                         (

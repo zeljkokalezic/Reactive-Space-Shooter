@@ -1,0 +1,3 @@
+﻿Presenter - only propagate events to models and vice versa, interact with View (Unity game object in scene)
+Model - not MonoBehaviour, holds the game data, modifies the data trough commands (functions), bound to presenter(s)
+View - game object in the scene

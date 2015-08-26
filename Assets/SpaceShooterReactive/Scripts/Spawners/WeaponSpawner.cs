@@ -18,7 +18,7 @@ public class WeaponSpawner : MonoBehaviour
     private WeaponPresenter.Factory weaponPresenterFactory;
 
     public GameObject weapon;
-    public Transform mountPosition;
+    //public Transform mountPosition;
     //move this to weapon model
     private float nextFire;
 
@@ -34,7 +34,7 @@ public class WeaponSpawner : MonoBehaviour
         //    .AddTo(this);
 
         //this can be weapon component of the player
-        var weaponPresenterSettings = new WeaponPresenter.Settings() { mountPosition = player.PlayerWeapon.RxPlayerWeaponMountPoint.Value };//mountPosition };
+        //var weaponPresenterSettings = new WeaponPresenter.Settings() { mountPosition = player.PlayerWeapon.RxPlayerWeaponMountPoint.Value };//mountPosition };
 
         this.gameObject.AddComponent<ObservableUpdateTrigger>()
                 .UpdateAsObservable()
@@ -43,7 +43,7 @@ public class WeaponSpawner : MonoBehaviour
                     && Time.time > nextFire)//next fire should be a weapon property
                 .Subscribe(x =>
                 {
-                    weaponPresenterFactory.Create(weapon, weaponPresenterSettings);
+                    weaponPresenterFactory.Create(weapon, player.PlayerWeapon);
                     //Instantiate(weapon, shotSpawn.position, shotSpawn.rotation);
                     nextFire = Time.time + player.RxPlayerFireRate.Value;
                 });
