@@ -1,0 +1,4 @@
+﻿#Create weapon spawner from factory
+#Weapon firing point should be retrieved directly from player
+
+CreateObjectPool Factory one day :)

@@ -1,3 +1,10 @@
 ﻿Presenter - only propagate events to models and vice versa, interact with View (Unity game object in scene)
 Model - not MonoBehaviour, holds the game data, modifies the data trough commands (functions), bound to presenter(s)
 View - game object in the scene
+
+Create objects trough factories, except when global(singleton)
+Do not skip levels in object graph !
+Eg. Player -> Weapon -> Bullet, bullet hits enemy: notify the player and the weapon of the hit trough propagation - BuletHit -> WeaponHit -> PlayerWeaponHit
+
+Do not optimize prematurely !
+Everybody is responsible for his destruction (for colider hit).

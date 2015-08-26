@@ -14,7 +14,6 @@ public class PlayerModel
         public int score;
         public float fireRate;
         public WeaponModel.Settings weaponSettings;
-        //public Transform weaponMountPoint;
     }
 
     public enum PlayerState { Inactive, Active, Dead }
@@ -38,12 +37,8 @@ public class PlayerModel
         RxPlayerFireRate = new ReactiveProperty<float>(playerSettings.fireRate);
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 
-        //do we need a weapon factory(spawner) here ? <- Probably yes, DI will autolink
+        //now we have ability to instantiate multiple weapons
         PlayerWeapon = playerWeaponFactory.Create(this);
-        //we should create auto linking somehow ...
-        //player is already injected into weapon becouse it is singleton for now, factory later
-        //playerWeapon.Player = this;
-        //PlayerWeapon.RxPlayerWeaponMountPoint.Value = playerSettings.weaponMountPoint;        
     }
 
     internal void ChangeName(string p)

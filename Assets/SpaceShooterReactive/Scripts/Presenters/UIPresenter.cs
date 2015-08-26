@@ -24,8 +24,8 @@ public class UIPresenter : MonoBehaviour
     void InitializePresenter()
     {
         Assert.IsNotNull(actionButton);
+        Assert.IsNotNull(scoreLabel);
         Assert.IsNotNull(infoLabel);
-
 
         scoreLabel.enabled = false;
         player.RxPlayerScore.Subscribe(x => scoreLabel.text = "Score: " + x).AddTo(this);
