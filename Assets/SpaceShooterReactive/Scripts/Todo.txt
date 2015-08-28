@@ -1,4 +1,10 @@
-﻿#Create weapon spawner from factory
-#Weapon firing point should be retrieved directly from player
+﻿#Create weapon spawner from factory - OK
+#Weapon firing point should be retrieved directly from player - OK
+#SpaceShip enemy - composition or inheritance ?
+Inheritance - BaseShip -> PlayerShip, EnemyShip - each implements own functions
+Composition - Ship -> EnemyShip has diferent mover & fire control component (AI controlled) see: http://gameprogrammingpatterns.com/component.html
 
+
+
+Now we just need player factory to enable multiple players
 CreateObjectPool Factory one day :)

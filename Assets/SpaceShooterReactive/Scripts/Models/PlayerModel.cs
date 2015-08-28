@@ -13,7 +13,7 @@ public class PlayerModel
         public int speed;
         public int score;
         public float fireRate;
-        public WeaponModel.Settings weaponSettings;
+        public WeaponModel.Settings weaponSettings;//do we need this ? - maybe as a global weapon setting defaults ?
     }
 
     public enum PlayerState { Inactive, Active, Dead }
@@ -34,11 +34,12 @@ public class PlayerModel
         RxPlayerName = new ReactiveProperty<string>(playerSettings.playerName);        
         RxPlayerSpeed = new ReactiveProperty<int>(playerSettings.speed);
         RxPlayerScore = new ReactiveProperty<int>(playerSettings.score);
+        //move this to weapon
         RxPlayerFireRate = new ReactiveProperty<float>(playerSettings.fireRate);
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 
         //now we have ability to instantiate multiple weapons
-        PlayerWeapon = playerWeaponFactory.Create(this);
+        PlayerWeapon = playerWeaponFactory.Create(this, playerSettings.weaponSettings);
     }
 
     internal void ChangeName(string p)

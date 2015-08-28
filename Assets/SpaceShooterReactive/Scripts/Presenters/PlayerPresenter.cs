@@ -9,45 +9,39 @@ using UniRx.Triggers;
 
 public class PlayerPresenter : MonoBehaviour
 {
+    [Serializable]
+    public class Settings
+    {
+        public GameObject weaponPresenter;
+    }
 
-    public float tilt;
-    public Done_Boundary boundary;
     public Transform shotSpawn;
+
+    [Inject]
+    protected readonly SimpleComponentFactory componentFactory;
+
+    [Inject]
+    private Settings settings;
 
     [Inject]
     private PlayerModel Model;
 
-    //switch to factory !
     [Inject]
-    private WeaponSpawner weaponSpawner;
+    private WeaponPresenter.Factory weaponPresenterFactory;
 
     [PostInject]
     void InitializePresenter()
     {
         Assert.IsNotNull(Model);
 
-        //for each player weapon create a weapon spawner - this naming convention is wierd - redesign
+        //for each player weapon create a weapon presenter
+        //we have just one now
+        Model.PlayerWeapon.RxPlayerWeaponMountPoint.Value = shotSpawn;
+        weaponPresenterFactory.Create(settings.weaponPresenter, Model.PlayerWeapon);
 
-        //this can be ship driver component of the player
-        this.gameObject.AddComponent<ObservableFixedUpdateTrigger>()
-            .FixedUpdateAsObservable()
-            .Where(_ => Model.RxPlayerState.Value == PlayerModel.PlayerState.Active)
-            .Subscribe(x =>
-            {
-                float moveHorizontal = Input.GetAxis("Horizontal");
-                float moveVertical = Input.GetAxis("Vertical");
-
-                Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-                GetComponent<Rigidbody>().velocity = movement * Model.RxPlayerSpeed.Value;
-
-                GetComponent<Rigidbody>().position = new Vector3
-                (
-                    Mathf.Clamp(GetComponent<Rigidbody>().position.x, boundary.xMin, boundary.xMax),
-                    0.0f,
-                    Mathf.Clamp(GetComponent<Rigidbody>().position.z, boundary.zMin, boundary.zMax)
-                );
-
-                GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
-            });
+        //ship driver component
+        //componentFactory.Create<ShipDriverPlayer>(this.gameObject, Model);
+        //componentFactory.Create<Mover>(this.gameObject, 1f);
+        componentFactory.Create<ShipDriverAI>(this.gameObject);        
     }
 }

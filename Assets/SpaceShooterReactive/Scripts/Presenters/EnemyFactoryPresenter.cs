@@ -4,7 +4,8 @@ using Zenject;
 using UniRx;
 using System;
 
-public class EnemySpawner : MonoBehaviour {
+public class EnemyFactoryPresenter : MonoBehaviour
+{
 
     [Inject]
     private GameModel game;

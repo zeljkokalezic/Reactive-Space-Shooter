@@ -6,14 +6,14 @@ using Zenject;
 
 public class WeaponModel
 {
-    public class Factory : Factory<PlayerModel, WeaponModel>
+    public class Factory : Factory<PlayerModel, Settings, WeaponModel>
     {
     }
 
     [Serializable]
     public class Settings
     {
-        public Transform weaponMountPoint;
+        
     }
 
     public ReactiveProperty<Transform> RxPlayerWeaponMountPoint { get; private set; }
@@ -22,9 +22,9 @@ public class WeaponModel
     public PlayerModel Player { get; set; }
 
     [Inject]
-    public WeaponModel(Settings playerSettings)
+    public WeaponModel(Settings weaponSettings)
     {
-        RxPlayerWeaponMountPoint = new ReactiveProperty<Transform>(playerSettings.weaponMountPoint);
+        RxPlayerWeaponMountPoint = new ReactiveProperty<Transform>();
     }
 
     public void Hit(EnemyModel enemyModel)

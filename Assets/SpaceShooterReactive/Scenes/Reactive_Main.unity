@@ -1728,10 +1728,6 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
---- !u!4 &1105996637 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 449922, guid: dbefb112f07f520409888c768560ded1, type: 2}
-  m_PrefabInternal: {fileID: 1847813318}
 --- !u!224 &1197304808 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22470100, guid: 9591515441453e6409f1af5b9f6ecb88,
@@ -1836,7 +1832,7 @@ GameObject:
   - 4: {fileID: 1286168939}
   - 114: {fileID: 1286168940}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: EnemyFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1862,13 +1858,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1286168938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 493cfb7d257d0c24aaae293ea24bdc4c, type: 3}
+  m_Script: {fileID: 11500000, guid: a9be57d1adf19ae40be916ed071b3e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   asteroids:
   - {fileID: 138422, guid: 06ad82831d5043b4887355ff14851fcb, type: 2}
-  - {fileID: 177028, guid: aef0ea3c0dba16c41992dd6bc6c07b8f, type: 2}
   - {fileID: 195718, guid: 7d78bdfbd683de94dadf8939edaa1356, type: 2}
+  - {fileID: 177028, guid: aef0ea3c0dba16c41992dd6bc6c07b8f, type: 2}
 --- !u!1 &1461320654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2217,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1687857889}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1705633950
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1942318415}
+    m_Modifications:
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 191184, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1705633951 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+  m_PrefabInternal: {fileID: 1705633950}
 --- !u!1 &1751715179
 GameObject:
   m_ObjectHideFlags: 0
@@ -3635,6 +3681,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 100902, guid: dbefb112f07f520409888c768560ded1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbefb112f07f520409888c768560ded1, type: 2}
   m_IsPrefabParent: 0
@@ -3733,22 +3783,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneSettings:
-    defaultPrefab: {fileID: 190560, guid: 7b9de56da57da5e42aa85154b1b7674d, type: 2}
-    weaponSpawner: {fileID: 133668, guid: 1c8825520b13b3947bc697ef53638e7a, type: 2}
     playerSettings:
       playerName: Starlord
       speed: 10
       score: 0
       fireRate: .25
-      weaponSettings:
-        weaponMountPoint: {fileID: 0}
     enemySettings:
       score: 10
-    playerWeaponSettings:
-      weaponMountPoint: {fileID: 1105996637}
     enemyPresenterSettings:
       spawnPosition: {x: 6, y: 0, z: 16}
       explosion: {fileID: 191524, guid: 29dd30e1e27fcf046abc41cc1c568fb0, type: 2}
+    playerPresenterSettings:
+      weaponPresenter: {fileID: 133668, guid: 1c8825520b13b3947bc697ef53638e7a, type: 2}
+    shipDriverPlayerSettings:
+      boundary:
+        xMin: -6
+        xMax: 6
+        zMin: -4
+        zMax: 8
+      tilt: 3
+    shipDriverAISettings:
+      boundary:
+        xMin: -6
+        xMax: 6
+        zMin: -20
+        zMax: 20
+      tilt: 10
+      dodge: 5
+      smoothing: 7.5
+      startWait:
+        Min: .5
+        Max: 1
+      maneuverTime:
+        Min: 1
+        Max: 2
+      maneuverWait:
+        Min: 1
+        Max: 2
 --- !u!114 &1942318414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3777,6 +3848,7 @@ Transform:
   - {fileID: 1286168939}
   - {fileID: 803755661}
   - {fileID: 744317413}
+  - {fileID: 1705633951}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1 &2088976779
