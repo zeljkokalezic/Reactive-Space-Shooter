@@ -24,18 +24,19 @@ public class ShipDriverAI : MonoBehaviour
 
 	private float currentSpeed;
 	private float targetManeuver;
+    private Rigidbody rigidBody;
 
     [PostInject]
 	void InitializeComponent ()
     {
-        var rigidBody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
         currentSpeed = rigidBody.velocity.z;
 
         //corutine is simpler than to build the rx events
         //see http://stackoverflow.com/questions/3670534/change-interval-of-rx-operators for more info
-        //StartCoroutine(Evade());
+        StartCoroutine(Evade());
         //equivalent
-        Observable.FromCoroutine(Evade).Subscribe().AddTo(this);
+        //Observable.FromCoroutine(Evade).Subscribe().AddTo(this);
 
 
         //Observable.Interval(TimeSpan.FromSeconds(1))
@@ -50,7 +51,7 @@ public class ShipDriverAI : MonoBehaviour
             //.Where(_ => Model.RxPlayerState.Value == PlayerModel.PlayerState.Active)
             .Subscribe(x =>
             {
-                float newManeuver = Mathf.MoveTowards(GetComponent<Rigidbody>().velocity.x, targetManeuver, settings.smoothing * Time.deltaTime);
+                float newManeuver = Mathf.MoveTowards(rigidBody.velocity.x, targetManeuver, settings.smoothing * Time.deltaTime);
                 rigidBody.velocity = new Vector3(newManeuver, 0.0f, currentSpeed);
                 rigidBody.position = new Vector3
                 (
@@ -74,6 +75,4 @@ public class ShipDriverAI : MonoBehaviour
             yield return new WaitForSeconds(UnityEngine.Random.Range(settings.maneuverWait.Min, settings.maneuverWait.Max));
         }
     }
-	
-
 }

@@ -10,7 +10,7 @@ using UniRx.Triggers;
 public class EnemyPresenter : MonoBehaviour
 {
     //pass the enemy model in future interation
-    public class Factory : PrefabFactory<EnemyPresenter>
+    public class Factory : PrefabFactory<EnemyModel, EnemyPresenter>
     {
     }
 
@@ -18,7 +18,7 @@ public class EnemyPresenter : MonoBehaviour
     public class Settings
     {
         //set transform here
-        //move this to the enemy, or to the spawner ?
+        //move this to the enemy model, or to the spawner ?
         public Vector3 spawnPosition;
         public GameObject explosion;
     }
@@ -29,11 +29,14 @@ public class EnemyPresenter : MonoBehaviour
     [Inject]
     public EnemyModel Model { get; private set; }
 
+    [Inject]
+    protected readonly SimpleComponentFactory componentFactory;
+
     // Use this for initialization
     [PostInject]
     void InitializePresenter()
     {
-        //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there <- THIS
+        //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there ?
         this.transform.position = new Vector3(UnityEngine.Random.Range(-settings.spawnPosition.x, settings.spawnPosition.x), settings.spawnPosition.y, settings.spawnPosition.z);
 
         this.gameObject.OnTriggerEnterAsObservable() //this will add required component automaticaly
@@ -50,5 +53,17 @@ public class EnemyPresenter : MonoBehaviour
                Destroy(this.gameObject);
            })
            .AddTo(this);
+
+        switch (Model.RxEnemyType.Value)
+        {
+            case EnemyModel.Type.Asteroid:
+                break;
+            case EnemyModel.Type.Ship:
+                componentFactory.Create<Mover>(this.gameObject, -5f);
+                componentFactory.Create<ShipDriverAI>(this.gameObject);
+                break;
+            default:
+                break;
+        }
     }
 }

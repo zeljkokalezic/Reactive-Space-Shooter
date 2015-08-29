@@ -37,11 +37,12 @@ public class PlayerPresenter : MonoBehaviour
         //for each player weapon create a weapon presenter
         //we have just one now
         Model.PlayerWeapon.RxPlayerWeaponMountPoint.Value = shotSpawn;
-        weaponPresenterFactory.Create(settings.weaponPresenter, Model.PlayerWeapon);
+        componentFactory.Create<WeaponPresenter>(this.gameObject, Model.PlayerWeapon);
+        //weaponPresenterFactory.Create(settings.weaponPresenter, Model.PlayerWeapon).gameObject.transform.parent = this.transform;
 
         //ship driver component
-        //componentFactory.Create<ShipDriverPlayer>(this.gameObject, Model);
+        componentFactory.Create<ShipDriverPlayer>(this.gameObject, Model);
         //componentFactory.Create<Mover>(this.gameObject, 1f);
-        componentFactory.Create<ShipDriverAI>(this.gameObject);        
+        //omponentFactory.Create<ShipDriverAI>(this.gameObject);        
     }
 }

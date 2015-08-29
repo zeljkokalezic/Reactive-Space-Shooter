@@ -1762,6 +1762,52 @@ Transform:
   - {fileID: 1789451495}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1001 &1201031963
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 123412, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1262672297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,6 +1911,8 @@ MonoBehaviour:
   - {fileID: 138422, guid: 06ad82831d5043b4887355ff14851fcb, type: 2}
   - {fileID: 195718, guid: 7d78bdfbd683de94dadf8939edaa1356, type: 2}
   - {fileID: 177028, guid: aef0ea3c0dba16c41992dd6bc6c07b8f, type: 2}
+  ships:
+  - {fileID: 123412, guid: b8ced230542717d42b05bffbf651a525, type: 2}
 --- !u!1 &1461320654
 GameObject:
   m_ObjectHideFlags: 0
@@ -3788,7 +3836,10 @@ MonoBehaviour:
       speed: 10
       score: 0
       fireRate: .25
+      weaponSettings:
+        bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
     enemySettings:
+      type: 0
       score: 10
     enemyPresenterSettings:
       spawnPosition: {x: 6, y: 0, z: 16}

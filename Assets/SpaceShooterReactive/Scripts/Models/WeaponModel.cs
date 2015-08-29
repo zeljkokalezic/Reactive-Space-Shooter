@@ -13,10 +13,11 @@ public class WeaponModel
     [Serializable]
     public class Settings
     {
-        
+        public GameObject bullet;
     }
 
     public ReactiveProperty<Transform> RxPlayerWeaponMountPoint { get; private set; }
+    public ReactiveProperty<GameObject> RxPlayerWeaponBullet { get; private set; }
 
     [Inject]
     public PlayerModel Player { get; set; }
@@ -25,6 +26,7 @@ public class WeaponModel
     public WeaponModel(Settings weaponSettings)
     {
         RxPlayerWeaponMountPoint = new ReactiveProperty<Transform>();
+        RxPlayerWeaponBullet = new ReactiveProperty<GameObject>(weaponSettings.bullet);
     }
 
     public void Hit(EnemyModel enemyModel)

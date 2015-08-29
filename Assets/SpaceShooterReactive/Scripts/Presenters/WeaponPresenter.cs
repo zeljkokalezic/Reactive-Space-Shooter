@@ -18,7 +18,6 @@ public class WeaponPresenter : MonoBehaviour
     [Inject]
     private WeaponBulletPresenter.Factory weaponBulletPresenterFactory;
 
-    public GameObject bullet;
     private float nextFire;
 
     [PostInject]
@@ -31,7 +30,7 @@ public class WeaponPresenter : MonoBehaviour
                 && Time.time > nextFire)//next fire should be a weapon property
             .Subscribe(x =>
             {
-                weaponBulletPresenterFactory.Create(bullet, Model);
+                weaponBulletPresenterFactory.Create(Model.RxPlayerWeaponBullet.Value, Model);
                 nextFire = Time.time + Model.Player.RxPlayerFireRate.Value;
             });
     }

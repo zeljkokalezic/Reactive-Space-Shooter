@@ -13,7 +13,12 @@ public class EnemyFactoryPresenter : MonoBehaviour
     [Inject]
     private EnemyPresenter.Factory enemyPresenterFactory;
 
+    [Inject]
+    private EnemyModel.Factory enemyModelFactory;
+
     public GameObject[] asteroids;
+
+    public GameObject[] ships;
 
     [PostInject]
     void Initialize()
@@ -22,12 +27,35 @@ public class EnemyFactoryPresenter : MonoBehaviour
             .Where(_ => game.RxGameState.Value == GameModel.GameState.InProgress)
             .Subscribe(x =>
                 {
-                    var randomNumber = UnityEngine.Random.Range(0, asteroids.Length);
-                    GameObject asteroid = asteroids[randomNumber];
+                    //var randomNumber = UnityEngine.Random.Range(0, asteroids.Length);
+                    //GameObject asteroid = asteroids[randomNumber];
                     //we can also create factory with parameters and pass settings for example, and/or enemy model
-                    enemyPresenterFactory.Create(asteroid);
+                    var enemyType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(EnemyModel.Type)).Length);
+                    var enemySettings = new EnemyModel.Settings()
+                    {
+                        score = 10,
+                        type = (EnemyModel.Type)enemyType
+                    };
+                    var model = enemyModelFactory.Create(enemySettings);
+                    switch (model.RxEnemyType.Value)
+                    {
+                        case EnemyModel.Type.Asteroid:
+                            CreateEnemy(model, asteroids);
+                            break;
+                        case EnemyModel.Type.Ship:
+                            CreateEnemy(model, ships);
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 })
             .AddTo(this);
     }
 
+    private void CreateEnemy(EnemyModel model, GameObject[] prefabs)
+    {
+        var randomNumber = UnityEngine.Random.Range(0, prefabs.Length);
+        enemyPresenterFactory.Create(prefabs[randomNumber], model);
+    }
 }
