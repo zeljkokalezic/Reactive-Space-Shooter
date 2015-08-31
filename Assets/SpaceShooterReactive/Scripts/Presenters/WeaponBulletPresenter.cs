@@ -7,7 +7,6 @@ using Zenject;
 using UnityEngine.Assertions;
 using UniRx.Triggers;
 
-//if we had more complicated weapon we can have more complicated model, like Weapon -> Bullet(Laser)
 public class WeaponBulletPresenter : MonoBehaviour
 {
     public class Factory : PrefabFactory<WeaponModel, WeaponBulletPresenter>
@@ -27,20 +26,28 @@ public class WeaponBulletPresenter : MonoBehaviour
     [PostInject]
     void InitializePresenter()
     {
-        this.transform.position = Model.RxPlayerWeaponMountPoint.Value.position;
+        this.transform.position = Model.RxWeaponMountPoint.Value.position;
+        this.transform.rotation = Model.RxWeaponMountPoint.Value.rotation;
+
+        GetComponent<Rigidbody>().velocity = transform.forward * 20;//this is hypotetical bullet(weapon speed)
 
         this.gameObject.OnTriggerEnterAsObservable()
-            //this can be implemented as extension OnTriggerEnterAsObservableWith<T> 
-            //http://chaoscultgames.com/2014/03/unity3d-mythbusting-performance/
-            //.Where(x => x.gameObject.GetComponent<EnemyPresenter>() != null)
             .Subscribe(other =>
             {
-                var enemyPresenter = other.GetComponent<EnemyPresenter>();
-                if (enemyPresenter != null)
+                var enemy = other.GetComponent<Damageable>();
+                if (enemy != null)
                 {
-                    Model.Hit(enemyPresenter.Model);
+                    Model.Hit(enemy.Model);
                 }
-                Destroy(this.gameObject);
+
+                if (Model.WeaponOwner.GetType() == enemy.Model.GetType())
+                {
+
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
             }).AddTo(this);
 
         Observable.Interval(TimeSpan.FromSeconds(5))

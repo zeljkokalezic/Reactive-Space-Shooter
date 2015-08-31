@@ -9,7 +9,6 @@ using UniRx.Triggers;
 
 public class ShipDriverPlayer : MonoBehaviour
 {
-    //we can have a separate factory if needed
     public class Factory : ComponentFactory<PlayerModel, ShipDriverPlayer>
     {
     }

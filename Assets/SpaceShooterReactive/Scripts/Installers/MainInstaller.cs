@@ -18,8 +18,7 @@ public class MainInstaller : MonoInstaller{
         Container.Bind<PlayerModel.Settings>().ToSingleInstance(sceneSettings.playerSettings).WhenInjectedInto<PlayerModel>();
         Container.Bind<PlayerPresenter.Settings>().ToSingleInstance(sceneSettings.playerPresenterSettings).WhenInjectedInto<PlayerPresenter>();
         Container.Bind<EnemyPresenter.Settings>().ToSingleInstance(sceneSettings.enemyPresenterSettings).WhenInjectedInto<EnemyPresenter>();
-        //Container.Bind<WeaponModel.Settings>().ToSingleInstance(sceneSettings.playerWeaponSettings).WhenInjectedInto<WeaponModel>();
-        Container.Bind<EnemyModel.Settings>().ToSingleInstance(sceneSettings.enemySettings).WhenInjectedInto<EnemyModel>();
+        Container.Bind<EnemyModel.Settings>().ToSingleInstance(sceneSettings.enemySettings);        
         Container.Bind<ShipDriverPlayer.Settings>().ToSingleInstance(sceneSettings.shipDriverPlayerSettings).WhenInjectedInto<ShipDriverPlayer>();
         Container.Bind<ShipDriverAI.Settings>().ToSingleInstance(sceneSettings.shipDriverAISettings).WhenInjectedInto<ShipDriverAI>();
 
@@ -36,7 +35,6 @@ public class MainInstaller : MonoInstaller{
     {        
         public PlayerModel.Settings playerSettings;
         public EnemyModel.Settings enemySettings;
-        //public WeaponModel.Settings playerWeaponSettings;
         public EnemyPresenter.Settings enemyPresenterSettings;
         public PlayerPresenter.Settings playerPresenterSettings;
         public ShipDriverPlayer.Settings shipDriverPlayerSettings;

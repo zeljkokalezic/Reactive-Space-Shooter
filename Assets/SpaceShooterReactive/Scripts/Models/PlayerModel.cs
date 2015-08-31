@@ -4,16 +4,15 @@ using UniRx;
 using System;
 using Zenject;
 
-public class PlayerModel
+public class PlayerModel : IArmed, IDamageable
 {
     [Serializable]
     public class Settings
     {
         public string playerName;
         public int speed;
-        public int score;
-        public float fireRate;
-        public WeaponModel.Settings weaponSettings;//do we need this ? - maybe as a global weapon setting defaults ?
+        public int initialScore;
+        public WeaponModel.Settings weaponSettings;
     }
 
     public enum PlayerState { Inactive, Active, Dead }
@@ -22,24 +21,26 @@ public class PlayerModel
     public ReactiveProperty<string> RxPlayerName { get; private set; }
     public ReactiveProperty<int> RxPlayerSpeed { get; private set; }
     public ReactiveProperty<int> RxPlayerScore { get; private set; }
-    public ReactiveProperty<float> RxPlayerFireRate { get; private set; }
+
+    //IDamageable
+    public ReactiveProperty<int> RxHealth { get; set; }
+
+    public ReactiveProperty<int> RxScore { get; set; }
 
     public WeaponModel PlayerWeapon { get; private set; }
 
     [Inject]
-    public PlayerModel(Settings playerSettings, WeaponModel.Factory playerWeaponFactory)
+    public PlayerModel(Settings playerSettings, WeaponModel.Factory weaponFactory)
     {
         //order of initilaization is based on object graph, if object A is injected into B A is initalized first !
 
         RxPlayerName = new ReactiveProperty<string>(playerSettings.playerName);        
         RxPlayerSpeed = new ReactiveProperty<int>(playerSettings.speed);
-        RxPlayerScore = new ReactiveProperty<int>(playerSettings.score);
-        //move this to weapon
-        RxPlayerFireRate = new ReactiveProperty<float>(playerSettings.fireRate);
+        RxPlayerScore = new ReactiveProperty<int>(playerSettings.initialScore);
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 
         //now we have ability to instantiate multiple weapons
-        PlayerWeapon = playerWeaponFactory.Create(this, playerSettings.weaponSettings);
+        PlayerWeapon = weaponFactory.Create(this, playerSettings.weaponSettings);
     }
 
     internal void ChangeName(string p)
@@ -50,10 +51,20 @@ public class PlayerModel
     internal void Activate()
     {
         RxPlayerState.Value = PlayerState.Active;
+        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;//activate weapon
     }
 
-    internal void WeaponHit(WeaponModel weaponModel, EnemyModel enemyModel)
+    public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
-        RxPlayerScore.Value += enemyModel.RxEnemyScore.Value;
+        //throw new NotImplementedException();
+    }
+
+    public void WeaponHit(WeaponModel weaponModel, IDamageable other)
+    {
+        //should the interface hold the health or just state (dead/alive) ?
+        if (other.RxHealth.Value == 0)//if the enemy is dead increase the score
+        {
+            RxPlayerScore.Value += other.RxScore.Value;
+        }        
     }
 }

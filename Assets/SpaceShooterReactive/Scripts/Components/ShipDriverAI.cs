@@ -29,7 +29,7 @@ public class ShipDriverAI : MonoBehaviour
     [PostInject]
 	void InitializeComponent ()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();        
         currentSpeed = rigidBody.velocity.z;
 
         //corutine is simpler than to build the rx events
@@ -38,17 +38,7 @@ public class ShipDriverAI : MonoBehaviour
         //equivalent
         //Observable.FromCoroutine(Evade).Subscribe().AddTo(this);
 
-
-        //Observable.Interval(TimeSpan.FromSeconds(1))
-        //    //.Where(_ => game.RxGameState.Value == GameModel.GameState.InProgress)
-        //    .Subscribe(x =>
-        //    {
-        //        targetManeuver = UnityEngine.Random.Range(1, settings.dodge) * -Mathf.Sign(transform.position.x);
-        //    })
-        //    .AddTo(this);
-
-        this.gameObject.FixedUpdateAsObservable()
-            //.Where(_ => Model.RxPlayerState.Value == PlayerModel.PlayerState.Active)
+        this.gameObject.FixedUpdateAsObservable()        
             .Subscribe(x =>
             {
                 float newManeuver = Mathf.MoveTowards(rigidBody.velocity.x, targetManeuver, settings.smoothing * Time.deltaTime);

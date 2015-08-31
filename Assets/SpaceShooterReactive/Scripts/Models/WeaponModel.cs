@@ -6,7 +6,7 @@ using Zenject;
 
 public class WeaponModel
 {
-    public class Factory : Factory<PlayerModel, Settings, WeaponModel>
+    public class Factory : Factory<IArmed, Settings, WeaponModel>
     {
     }
 
@@ -14,23 +14,32 @@ public class WeaponModel
     public class Settings
     {
         public GameObject bullet;
+        public float fireRate;
     }
 
-    public ReactiveProperty<Transform> RxPlayerWeaponMountPoint { get; private set; }
-    public ReactiveProperty<GameObject> RxPlayerWeaponBullet { get; private set; }
+    public enum WeaponState { Inactive, Active }
+
+    public ReactiveProperty<WeaponState> RxWeaponState { get; private set; }
+    public ReactiveProperty<Transform> RxWeaponMountPoint { get; private set; }
+    public ReactiveProperty<GameObject> RxWeaponBullet { get; private set; }
+    public ReactiveProperty<float> RxWeaponFireRate { get; private set; }
+    public ReactiveProperty<bool> RxWeaponFiring { get; private set; }
 
     [Inject]
-    public PlayerModel Player { get; set; }
+    public IArmed WeaponOwner { get; set; }
 
     [Inject]
     public WeaponModel(Settings weaponSettings)
     {
-        RxPlayerWeaponMountPoint = new ReactiveProperty<Transform>();
-        RxPlayerWeaponBullet = new ReactiveProperty<GameObject>(weaponSettings.bullet);
+        RxWeaponMountPoint = new ReactiveProperty<Transform>();
+        RxWeaponBullet = new ReactiveProperty<GameObject>(weaponSettings.bullet);
+        RxWeaponState = new ReactiveProperty<WeaponState>(WeaponState.Inactive);
+        RxWeaponFireRate = new ReactiveProperty<float>(weaponSettings.fireRate);
+        RxWeaponFiring = new ReactiveProperty<bool>(false);
     }
 
-    public void Hit(EnemyModel enemyModel)
+    public void Hit(IDamageable other)
     {
-        Player.WeaponHit(this, enemyModel);
+        WeaponOwner.WeaponHit(this, other);
     }
 }

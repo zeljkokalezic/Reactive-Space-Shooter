@@ -12,7 +12,6 @@ public class PlayerPresenter : MonoBehaviour
     [Serializable]
     public class Settings
     {
-        public GameObject weaponPresenter;
     }
 
     public Transform shotSpawn;
@@ -34,15 +33,10 @@ public class PlayerPresenter : MonoBehaviour
     {
         Assert.IsNotNull(Model);
 
-        //for each player weapon create a weapon presenter
-        //we have just one now
-        Model.PlayerWeapon.RxPlayerWeaponMountPoint.Value = shotSpawn;
+        Model.PlayerWeapon.RxWeaponMountPoint.Value = shotSpawn;
         componentFactory.Create<WeaponPresenter>(this.gameObject, Model.PlayerWeapon);
-        //weaponPresenterFactory.Create(settings.weaponPresenter, Model.PlayerWeapon).gameObject.transform.parent = this.transform;
-
-        //ship driver component
         componentFactory.Create<ShipDriverPlayer>(this.gameObject, Model);
-        //componentFactory.Create<Mover>(this.gameObject, 1f);
-        //omponentFactory.Create<ShipDriverAI>(this.gameObject);        
+        componentFactory.Create<WeaponTriggerButton>(this.gameObject, Model.PlayerWeapon, "Fire1");
+        componentFactory.Create<Damageable>(this.gameObject, Model);
     }
 }

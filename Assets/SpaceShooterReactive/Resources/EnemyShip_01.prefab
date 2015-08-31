@@ -42,8 +42,8 @@ GameObject:
   - 4: {fileID: 457784}
   - 54: {fileID: 5421868}
   - 135: {fileID: 13567340}
-  - 82: {fileID: 8231432}
   - 114: {fileID: 11495604}
+  - 82: {fileID: 8231432}
   m_Layer: 0
   m_Name: EnemyShip_01
   m_TagString: Enemy
@@ -75,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122174}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -0, y: 0, z: -.98299998}
+  m_LocalPosition: {x: -0, y: 0, z: -1.53600001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 457784}
@@ -176,7 +176,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1be4472894949437694aead55c6da60f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: .75
   m_Pitch: 1
   Loop: 0
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6469b5da23390f42aff8f2bddd5d7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotSpawn: {fileID: 439632}
 --- !u!135 &13567340
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1327,6 +1328,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: speed
       value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shotSpawn
+      value: 
+      objectReference: {fileID: 439632}
+    - target: {fileID: 0}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalRotation.w
+      value: -1.62920685e-07
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

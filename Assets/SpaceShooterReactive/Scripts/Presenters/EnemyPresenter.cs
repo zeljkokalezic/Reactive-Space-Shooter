@@ -22,6 +22,7 @@ public class EnemyPresenter : MonoBehaviour
         public Vector3 spawnPosition;
         public GameObject explosion;
     }
+    public Transform shotSpawn;
 
     [Inject]
     private Settings settings;
@@ -43,8 +44,16 @@ public class EnemyPresenter : MonoBehaviour
             //.Where(x => x.gameObject.GetComponent<WeaponPresenter>() != null)
             .Subscribe(other =>
             {
-                Instantiate(settings.explosion, other.transform.position, other.transform.rotation);
-                Destroy(this.gameObject);
+                var bullet = other.GetComponent<WeaponBulletPresenter>();
+                if (bullet != null && bullet.Model.WeaponOwner.GetType() == Model.GetType())
+                {
+                    
+                }
+                else
+                {
+                    Instantiate(settings.explosion, other.transform.position, other.transform.rotation);
+                    Destroy(this.gameObject);
+                }
             }).AddTo(this);
 
         Observable.Interval(TimeSpan.FromSeconds(10))
@@ -54,13 +63,20 @@ public class EnemyPresenter : MonoBehaviour
            })
            .AddTo(this);
 
+        componentFactory.Create<Damageable>(this.gameObject, Model);
+
         switch (Model.RxEnemyType.Value)
         {
             case EnemyModel.Type.Asteroid:
                 break;
             case EnemyModel.Type.Ship:
+                Model.EnemyWeapon.RxWeaponMountPoint.Value = shotSpawn;
+                //Model.EnemyWeapon.RxWeaponFiring.Value = true;
+                Model.EnemyWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;
                 componentFactory.Create<Mover>(this.gameObject, -5f);
                 componentFactory.Create<ShipDriverAI>(this.gameObject);
+                componentFactory.Create<WeaponPresenter>(this.gameObject, Model.EnemyWeapon);
+                componentFactory.Create<WeaponTriggerTimer>(this.gameObject, Model.EnemyWeapon);
                 break;
             default:
                 break;
