@@ -45,7 +45,7 @@ public class EnemyPresenter : MonoBehaviour
             .Subscribe(other =>
             {
                 var bullet = other.GetComponent<WeaponBulletPresenter>();
-                if (bullet != null && bullet.Model.WeaponOwner.GetType() == Model.GetType())
+                if (bullet != null && bullet.Model.WeaponOwner.GetType() == Model.GetType())//disable frendly fire
                 {
                     
                 }

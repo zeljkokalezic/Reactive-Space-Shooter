@@ -16,10 +16,12 @@ public class WeaponTriggerButton : MonoBehaviour
     void InitializeComponent()
 	{
         this.gameObject.UpdateAsObservable()
-            .Where(x => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active)
+            .Where(x => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active && Input.GetButton(buttonName))
             .Subscribe(x =>
             {
-                Model.RxWeaponFiring.Value = Input.GetButton(buttonName);
+                Model.Fire();
+                //Model.RxWeaponFiring.SetValueAndForceNotify(Input.GetButton(buttonName));
+                //Model.RxWeaponFiring.Value = Input.GetButton(buttonName);
             });
 	}
 }

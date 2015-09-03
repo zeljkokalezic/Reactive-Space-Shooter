@@ -25,6 +25,8 @@ public class WeaponModel
     public ReactiveProperty<float> RxWeaponFireRate { get; private set; }
     public ReactiveProperty<bool> RxWeaponFiring { get; private set; }
 
+    private float nextFireTime;
+
     [Inject]
     public IArmed WeaponOwner { get; set; }
 
@@ -36,6 +38,20 @@ public class WeaponModel
         RxWeaponState = new ReactiveProperty<WeaponState>(WeaponState.Inactive);
         RxWeaponFireRate = new ReactiveProperty<float>(weaponSettings.fireRate);
         RxWeaponFiring = new ReactiveProperty<bool>(false);
+    }
+
+    //we can make one with parameters for targeting weapons
+    public void Fire()
+    {
+        //we can also process aditional stuff like bullet count, etc.. in the future
+
+        if (Time.time > nextFireTime)
+        {
+            nextFireTime = Time.time + RxWeaponFireRate.Value;
+            //we can have parameters here not just simple bool (basically weapon bullet model)
+            //that will describe things like bullet speed and fire angle for example
+            RxWeaponFiring.SetValueAndForceNotify(true);
+        }        
     }
 
     public void Hit(IDamageable other)

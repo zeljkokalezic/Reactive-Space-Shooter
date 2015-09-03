@@ -29,6 +29,7 @@ public class WeaponBulletPresenter : MonoBehaviour
         this.transform.position = Model.RxWeaponMountPoint.Value.position;
         this.transform.rotation = Model.RxWeaponMountPoint.Value.rotation;
 
+        //crete a bullet model or not ?
         GetComponent<Rigidbody>().velocity = transform.forward * 20;//this is hypotetical bullet(weapon speed)
 
         this.gameObject.OnTriggerEnterAsObservable()
@@ -38,9 +39,11 @@ public class WeaponBulletPresenter : MonoBehaviour
                 if (enemy != null)
                 {
                     Model.Hit(enemy.Model);
+                    enemy.Model.HitByWeapon(Model, Model.WeaponOwner);
                 }
 
-                if (Model.WeaponOwner.GetType() == enemy.Model.GetType())
+                //actors of same type does not hit each other (enemy-enemy, bullet-bullet)
+                if ((enemy != null && Model.WeaponOwner.GetType() == enemy.Model.GetType()) || other.GetComponent<WeaponBulletPresenter>() != null)
                 {
 
                 }

@@ -3837,7 +3837,7 @@ MonoBehaviour:
       initialScore: 0
       weaponSettings:
         bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
-        fireRate: .5
+        fireRate: .100000001
     enemySettings:
       score: 10
       health: 0

@@ -46,11 +46,15 @@ public class EnemyModel : IArmed, IDamageable
 
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
-        
+        //set state to destroyed here if health == 0
+        //process aditional options if needed (reduce health, etc..)
+        Debug.Log("Enemy Hit");
+        Debug.Log(weaponModel);
+        Debug.Log(other);
     }
 
     public void WeaponHit(WeaponModel weaponModel, IDamageable other)
     {
-        
+        //do nothing for now
     }
 }

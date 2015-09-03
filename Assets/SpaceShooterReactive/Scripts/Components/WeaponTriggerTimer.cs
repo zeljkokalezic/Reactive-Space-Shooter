@@ -17,7 +17,8 @@ public class WeaponTriggerTimer : MonoBehaviour
             .Where(_ => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active)
             .Subscribe(x =>
             {
-                Model.RxWeaponFiring.Value = !Model.RxWeaponFiring.Value;
+                Model.Fire();
+                //Model.RxWeaponFiring.Value = !Model.RxWeaponFiring.Value;
             }).AddTo(this);            
 	}
 }

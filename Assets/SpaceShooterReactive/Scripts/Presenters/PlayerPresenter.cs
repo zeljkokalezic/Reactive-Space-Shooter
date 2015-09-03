@@ -38,5 +38,11 @@ public class PlayerPresenter : MonoBehaviour
         componentFactory.Create<ShipDriverPlayer>(this.gameObject, Model);
         componentFactory.Create<WeaponTriggerButton>(this.gameObject, Model.PlayerWeapon, "Fire1");
         componentFactory.Create<Damageable>(this.gameObject, Model);
+
+        Model.RxPlayerState
+            .Where(x => x != PlayerModel.PlayerState.Active)//not active
+            .Subscribe(x => GetComponent<Rigidbody>().velocity = Vector3.zero).AddTo(this);
+
+        //TODO: Colision trigger -> player killed :)
     }
 }

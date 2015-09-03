@@ -57,6 +57,14 @@ public class PlayerModel : IArmed, IDamageable
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
         //throw new NotImplementedException();
+        //if shield is present wepon will hit the shield first
+        //do aditional calculations if needed
+        RxPlayerState.Value = PlayerState.Dead;
+        //disable the weapon
+        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Inactive;
+        //Debug.Log("Player Hit");
+        //Debug.Log(weaponModel);
+        //Debug.Log(other);
     }
 
     public void WeaponHit(WeaponModel weaponModel, IDamageable other)
