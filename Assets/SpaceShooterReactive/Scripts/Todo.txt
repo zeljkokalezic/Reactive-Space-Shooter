@@ -5,6 +5,19 @@ Inheritance - BaseShip -> PlayerShip, EnemyShip - each implements own functions
 Composition - Ship -> EnemyShip has diferent mover & fire control component (AI controlled) see: http://gameprogrammingpatterns.com/component.html
 
 
+#Refactor enemy and player ship into Ship class
+#Enemy has a ship and Player has a ship relations
+#Asteroid is also a ship ?
+#Restart game option
+#Make game work across whole screen ?
+#Save highscore & stats (Achievements, Google Play)
+
+
+
+Shields
+Powerups
+Weapons
+Multiplayer (Co-Op)
 
 Now we just need player factory to enable multiple players
 CreateObjectPool Factory one day :)

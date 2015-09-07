@@ -15,6 +15,7 @@ public class WeaponModel
     {
         public GameObject bullet;
         public float fireRate;
+        public float bulletSpeed;
     }
 
     public enum WeaponState { Inactive, Active }
@@ -23,6 +24,7 @@ public class WeaponModel
     public ReactiveProperty<Transform> RxWeaponMountPoint { get; private set; }
     public ReactiveProperty<GameObject> RxWeaponBullet { get; private set; }
     public ReactiveProperty<float> RxWeaponFireRate { get; private set; }
+    public ReactiveProperty<float> RxWeaponBulletSpeed { get; private set; }
     public ReactiveProperty<bool> RxWeaponFiring { get; private set; }
 
     private float nextFireTime;
@@ -37,6 +39,7 @@ public class WeaponModel
         RxWeaponBullet = new ReactiveProperty<GameObject>(weaponSettings.bullet);
         RxWeaponState = new ReactiveProperty<WeaponState>(WeaponState.Inactive);
         RxWeaponFireRate = new ReactiveProperty<float>(weaponSettings.fireRate);
+        RxWeaponBulletSpeed = new ReactiveProperty<float>(weaponSettings.bulletSpeed);
         RxWeaponFiring = new ReactiveProperty<bool>(false);
     }
 

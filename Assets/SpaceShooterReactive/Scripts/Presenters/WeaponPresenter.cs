@@ -23,24 +23,9 @@ public class WeaponPresenter : MonoBehaviour
     [PostInject]
     void Initialize()
     {
-        //rework this into fire command that is sent to the model and the presenter responds
-        //fire command (property) is observable and is initiated by the trigger
-
         //event test
         Model.RxWeaponFiring
             .Where(x => x == true)
             .Subscribe(x => weaponBulletPresenterFactory.Create(Model.RxWeaponBullet.Value, Model)).AddTo(this);
-
-        //this.gameObject.AddComponent<ObservableUpdateTrigger>()
-        //    .UpdateAsObservable()
-        //    .Where(_ => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active
-        //        && Model.RxWeaponFiring.Value
-        //        && Time.time > nextFire)
-        //    .Subscribe(x =>
-        //    {
-        //        //Debug.Log(Model.WeaponOwner + " Firing");
-        //        weaponBulletPresenterFactory.Create(Model.RxWeaponBullet.Value, Model);
-        //        nextFire = Time.time + Model.RxWeaponFireRate.Value;
-        //    });
     }
 }

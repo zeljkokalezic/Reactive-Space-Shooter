@@ -15,10 +15,8 @@ public class WeaponTriggerTimer : MonoBehaviour
 	{
          Observable.Interval(TimeSpan.FromSeconds(0.5))
             .Where(_ => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active)
-            .Subscribe(x =>
-            {
+            .Subscribe(x => {
                 Model.Fire();
-                //Model.RxWeaponFiring.Value = !Model.RxWeaponFiring.Value;
             }).AddTo(this);            
 	}
 }

@@ -27,6 +27,7 @@ public class MainInstaller : MonoInstaller{
         Container.Bind<EnemyPresenter.Factory>().ToSingle();
         Container.Bind<WeaponBulletPresenter.Factory>().ToSingle();
         Container.Bind<WeaponPresenter.Factory>().ToSingle();
+        Container.Bind<ShipModel.Factory>().ToSingle();
         Container.Bind<SimpleComponentFactory>().ToSingle();        
     }
 

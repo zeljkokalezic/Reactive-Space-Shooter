@@ -7,8 +7,9 @@ public class DestroyByTime : MonoBehaviour
     [Inject]
 	public float lifetime;
 
-	void Start ()
-	{
+    [PostInject]
+    void InitializeComponent()
+    {
 		Destroy (gameObject, lifetime);
 	}
 }

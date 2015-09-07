@@ -32,11 +32,7 @@ public class ShipDriverAI : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();        
         currentSpeed = rigidBody.velocity.z;
 
-        //corutine is simpler than to build the rx events
-        //see http://stackoverflow.com/questions/3670534/change-interval-of-rx-operators for more info
         StartCoroutine(Evade());
-        //equivalent
-        //Observable.FromCoroutine(Evade).Subscribe().AddTo(this);
 
         this.gameObject.FixedUpdateAsObservable()        
             .Subscribe(x =>

@@ -4,7 +4,7 @@ using UniRx;
 using System;
 using Zenject;
 
-public class PlayerModel : IArmed, IDamageable
+public class PlayerModel: IArmed, IDamageable
 {
     [Serializable]
     public class Settings
@@ -24,10 +24,10 @@ public class PlayerModel : IArmed, IDamageable
 
     //IDamageable
     public ReactiveProperty<int> RxHealth { get; set; }
-
     public ReactiveProperty<int> RxScore { get; set; }
 
     public WeaponModel PlayerWeapon { get; private set; }
+    public ShipModel PlayerShip { get; private set; }
 
     [Inject]
     public PlayerModel(Settings playerSettings, WeaponModel.Factory weaponFactory)
@@ -54,17 +54,15 @@ public class PlayerModel : IArmed, IDamageable
         PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;//activate weapon
     }
 
+    internal void Deactivate()
+    {
+        RxPlayerState.Value = PlayerState.Dead;//do we need the inactive state ?
+        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Inactive;
+    }
+
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
-        //throw new NotImplementedException();
-        //if shield is present wepon will hit the shield first
-        //do aditional calculations if needed
-        RxPlayerState.Value = PlayerState.Dead;
-        //disable the weapon
-        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Inactive;
-        //Debug.Log("Player Hit");
-        //Debug.Log(weaponModel);
-        //Debug.Log(other);
+        Deactivate();
     }
 
     public void WeaponHit(WeaponModel weaponModel, IDamageable other)
@@ -73,6 +71,6 @@ public class PlayerModel : IArmed, IDamageable
         if (other.RxHealth.Value == 0)//if the enemy is dead increase the score
         {
             RxPlayerScore.Value += other.RxScore.Value;
-        }        
+        }
     }
 }

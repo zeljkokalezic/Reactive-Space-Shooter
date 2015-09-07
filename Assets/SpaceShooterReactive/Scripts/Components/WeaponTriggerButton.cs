@@ -20,8 +20,6 @@ public class WeaponTriggerButton : MonoBehaviour
             .Subscribe(x =>
             {
                 Model.Fire();
-                //Model.RxWeaponFiring.SetValueAndForceNotify(Input.GetButton(buttonName));
-                //Model.RxWeaponFiring.Value = Input.GetButton(buttonName);
-            });
-	}
+            }).AddTo(this);
+    }
 }

@@ -17,8 +17,6 @@ public class EnemyPresenter : MonoBehaviour
     [Serializable]
     public class Settings
     {
-        //set transform here
-        //move this to the enemy model, or to the spawner ?
         public Vector3 spawnPosition;
         public GameObject explosion;
     }
@@ -40,8 +38,7 @@ public class EnemyPresenter : MonoBehaviour
         //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there ?
         this.transform.position = new Vector3(UnityEngine.Random.Range(-settings.spawnPosition.x, settings.spawnPosition.x), settings.spawnPosition.y, settings.spawnPosition.z);
 
-        this.gameObject.OnTriggerEnterAsObservable() //this will add required component automaticaly
-            //.Where(x => x.gameObject.GetComponent<WeaponPresenter>() != null)
+        this.gameObject.OnTriggerEnterAsObservable()
             .Subscribe(other =>
             {
                 var bullet = other.GetComponent<WeaponBulletPresenter>();

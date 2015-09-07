@@ -30,9 +30,6 @@ public class EnemyFactoryPresenter : MonoBehaviour
             .Where(_ => game.RxGameState.Value == GameModel.GameState.InProgress)
             .Subscribe(x =>
                 {
-                    //var randomNumber = UnityEngine.Random.Range(0, asteroids.Length);
-                    //GameObject asteroid = asteroids[randomNumber];
-                    //we can also create factory with parameters and pass settings for example, and/or enemy model
                     var enemyType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(EnemyModel.Type)).Length);                    
                     var model = enemyModelFactory.Create(enemyModelDefaultSettings, (EnemyModel.Type)enemyType);
                     switch (model.RxEnemyType.Value)

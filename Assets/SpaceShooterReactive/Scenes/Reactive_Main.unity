@@ -2084,52 +2084,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1540457002}
---- !u!1001 &1550403752
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 457784, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 123412, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b8ced230542717d42b05bffbf651a525, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1566069601
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,24 +3789,32 @@ MonoBehaviour:
       playerName: Starlord
       speed: 10
       initialScore: 0
-      weaponSettings:
-        bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
-        fireRate: .100000001
+      shipSettings:
+        score: 0
+        health: 0
+        speed: 10
+        weaponSettings:
+        - bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
+          fireRate: .5
+          bulletSpeed: 10
     enemySettings:
       score: 10
       health: 0
       weaponSettings:
         bullet: {fileID: 164042, guid: 26fd8bd80f1131b4b9e1cc53daadf09f, type: 2}
         fireRate: .200000003
+        bulletSpeed: 10
     enemyPresenterSettings:
       spawnPosition: {x: 6, y: 0, z: 16}
       explosion: {fileID: 191524, guid: 29dd30e1e27fcf046abc41cc1c568fb0, type: 2}
+    playerPresenterSettings:
+      playerExplosion: {fileID: 170100, guid: 0c0ef47bb91af774494a3d6f817cf17a, type: 2}
     shipDriverPlayerSettings:
       boundary:
         xMin: -6
         xMax: 6
         zMin: -4
-        zMax: 8
+        zMax: 10
       tilt: 3
     shipDriverAISettings:
       boundary:

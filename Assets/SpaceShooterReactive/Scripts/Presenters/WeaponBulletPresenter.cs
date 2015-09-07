@@ -30,7 +30,7 @@ public class WeaponBulletPresenter : MonoBehaviour
         this.transform.rotation = Model.RxWeaponMountPoint.Value.rotation;
 
         //crete a bullet model or not ?
-        GetComponent<Rigidbody>().velocity = transform.forward * 20;//this is hypotetical bullet(weapon speed)
+        GetComponent<Rigidbody>().velocity = transform.forward * Model.RxWeaponBulletSpeed.Value;
 
         this.gameObject.OnTriggerEnterAsObservable()
             .Subscribe(other =>

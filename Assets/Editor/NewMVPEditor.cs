@@ -18,7 +18,9 @@ public class NewMVPEditor : EditorWindow
         mvpname = EditorGUILayout.TextField(mvpname);
         EditorGUI.FocusTextInControl("mvpname");
 
-        if (GUILayout.Button("Create"))
+        //"View", view is the unity object in the scene
+
+        if (GUILayout.Button("Create Model"))
         {
             if (mvpname == "")
             {
@@ -26,9 +28,57 @@ public class NewMVPEditor : EditorWindow
             }
             else
             {
+                //"Model"
+                string filename = path + "/" + mvpname + "Model.cs";
+                Debug.Log(filename);
+                if (!File.Exists(filename))
+                {
+                    using (StreamWriter outfile = new StreamWriter(filename))
+                    {
+                        #region ModelFile
+                        outfile.Write(
+@"using UnityEngine;
+using System.Collections;
+using UniRx;
+using System;
+using Zenject;
 
-                //"View", view is the unity object(s) in the scene
+public class " + mvpname + @"Model
+{
+    public class Factory : Factory<Settings, " + mvpname + @"Model>
+    {
+    }
 
+    [Serializable]
+    public class Settings
+    {
+
+    }
+
+    [Inject]
+    public " + mvpname + @"Model(Settings settings)
+    {
+
+    }
+}");
+                        #endregion
+                    }
+                }
+
+                AssetDatabase.Refresh();
+
+                //Close();
+            }
+        }
+
+        if (GUILayout.Button("Create Presenter"))
+        {
+            if (mvpname == "")
+            {
+                EditorUtility.DisplayDialog("Info", "Please enter name.", "Ok");
+            }
+            else
+            {
                 //"Presenter"
                 string filename = path + "/" + mvpname + "Presenter.cs";
                 Debug.Log(filename);
@@ -36,68 +86,49 @@ public class NewMVPEditor : EditorWindow
                 {
                     using (StreamWriter outfile = new StreamWriter(filename))
                     {
-                        outfile.Write(
-@"using System;
-using UniRx;
-using UnityEngine;
-
-public class "+ mvpname +@"Presenter : PresenterBase {
-
-    // indicate children dependency
-    protected override IPresenter[] Children
-    {
-        get
-        {
-            return EmptyChildren;
-        }
-    }
-
-    // This Phase is Parent -> Child
-    // You can pass argument to children, but you can't touch child's property
-    protected override void BeforeInitialize()
-    {
-        
-    }
-
-    // This Phase is Child -> Parent
-    // You can touch child's property safety
-    protected override void Initialize()
-    {
-        
-    }
-}");
-                    }
-                }
-
-                //"Model"
-                filename = path + "/" + mvpname + "Model.cs";
-                Debug.Log(filename);
-                if (!File.Exists(filename))
-                {
-                    using (StreamWriter outfile = new StreamWriter(filename))
-                    {
-                        //outfile.WriteLine("using UnityEngine;");
-                        //outfile.WriteLine("using System.Collections;");
-                        //outfile.WriteLine("");
-                        //outfile.WriteLine("public class " + mvpname + "Model {");
-                        //outfile.WriteLine("}");
+                        #region PresenterFile
                         outfile.Write(
 @"using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UniRx;
+using System;
+using Zenject;
+using UnityEngine.Assertions;
+using UniRx.Triggers;
 
-public class " + mvpname + @"Model
+public class " + mvpname + @"Presenter : MonoBehaviour
 {
-
-}");
-                    }
-                }
-
-
-                AssetDatabase.Refresh();
-
-                Close();
-            }          
-        }
+    public class Factory : PrefabFactory<" + mvpname + @"Model, " + mvpname + @"Presenter>
+    {
     }
 
+    [Serializable]
+    public class Settings
+    {
+    }
+
+    [Inject]
+    public " + mvpname + @"Model Model { get; private set; }
+
+    [Inject]
+    private Settings settings { get; private set; }
+
+    // Use this for initialization
+    [PostInject]
+    void InitializePresenter()
+    {
+
+    }
+}");
+                        #endregion
+                    }
+                }
+                AssetDatabase.Refresh();
+
+                //Close();
+
+            }
+        }
+    }
 }

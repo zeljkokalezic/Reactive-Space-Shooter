@@ -32,6 +32,13 @@ public class UIPresenter : MonoBehaviour
 
         player.RxPlayerName.Subscribe(x => infoLabel.text = "Welcome " + x).AddTo(this);
 
+        game.RxGameState
+            .Where(x => x == GameModel.GameState.GameOver)
+            .Subscribe(x => {
+                infoLabel.text = "Game Over";
+                infoLabel.enabled = true;
+            }).AddTo(this);
+
         //player.RxPlayerFireRate.Subscribe(x => Debug.Log(x)).AddTo(this);
 
         actionButton.onClick.AsObservable().Subscribe(_ =>

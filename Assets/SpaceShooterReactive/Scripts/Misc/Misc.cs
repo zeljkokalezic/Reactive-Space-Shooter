@@ -1,6 +1,4 @@
-﻿
-
-[System.Serializable]
+﻿[System.Serializable]
 public class Boundary
 {
     public float xMin;

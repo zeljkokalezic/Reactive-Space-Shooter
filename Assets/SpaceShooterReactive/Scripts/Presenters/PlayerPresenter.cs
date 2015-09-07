@@ -12,8 +12,9 @@ public class PlayerPresenter : MonoBehaviour
     [Serializable]
     public class Settings
     {
+        public GameObject playerExplosion;
     }
-
+    
     public Transform shotSpawn;
 
     [Inject]
@@ -40,9 +41,33 @@ public class PlayerPresenter : MonoBehaviour
         componentFactory.Create<Damageable>(this.gameObject, Model);
 
         Model.RxPlayerState
-            .Where(x => x != PlayerModel.PlayerState.Active)//not active
-            .Subscribe(x => GetComponent<Rigidbody>().velocity = Vector3.zero).AddTo(this);
+            .Where(x => x == PlayerModel.PlayerState.Dead)
+            .Subscribe(x =>
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Instantiate(settings.playerExplosion, this.transform.position, this.transform.rotation);
+                ToggleVisibility();//TODO: disable the colider also
+            }).AddTo(this);
 
-        //TODO: Colision trigger -> player killed :)
+        //should we move the colison handling to the damageable component ?
+        this.gameObject.OnTriggerEnterAsObservable()
+            .Subscribe(other =>
+            {
+                var enemy = other.GetComponent<Damageable>();
+                if (enemy != null)
+                {
+                    Model.Deactivate();
+                }
+            }).AddTo(this);
+    }
+
+    void ToggleVisibility()
+    {
+        // toggles the visibility of this gameobject and all it's children
+        var renderers = gameObject.GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in renderers)
+        {
+            r.enabled = !r.enabled;
+        }
     }
 }

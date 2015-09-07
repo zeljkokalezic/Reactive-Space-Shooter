@@ -23,6 +23,12 @@ public class GameModel
     {
         _player = player;
         RxGameState = new ReactiveProperty<GameState>(GameState.WaitingToStart);
+        _player.RxPlayerState
+            .Where(x => x == PlayerModel.PlayerState.Dead)
+            .Subscribe(x =>
+            {
+                RxGameState.Value = GameState.GameOver;
+            });
     }
 
     public void StartGame()
