@@ -38,7 +38,7 @@ public class ShipDriverPlayer : MonoBehaviour
 
                 //cashe rigidbody here
                 Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-                GetComponent<Rigidbody>().velocity = movement * Model.RxPlayerSpeed.Value;
+                GetComponent<Rigidbody>().velocity = movement * Model.RxShipSpeed.Value;
 
                 GetComponent<Rigidbody>().position = new Vector3
                 (

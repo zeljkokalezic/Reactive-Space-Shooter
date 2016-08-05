@@ -10,7 +10,7 @@ public class PlayerModel: IArmed, IDamageable
     public class Settings
     {
         public string playerName;
-        public int speed;
+        public int playerShipSpeed;
         public int initialScore;
         public WeaponModel.Settings weaponSettings;
     }
@@ -19,7 +19,7 @@ public class PlayerModel: IArmed, IDamageable
 
     public ReactiveProperty<PlayerState> RxPlayerState { get; private set; }
     public ReactiveProperty<string> RxPlayerName { get; private set; }
-    public ReactiveProperty<int> RxPlayerSpeed { get; private set; }
+    public ReactiveProperty<int> RxShipSpeed { get; private set; }
     public ReactiveProperty<int> RxPlayerScore { get; private set; }
 
     //IDamageable
@@ -35,7 +35,7 @@ public class PlayerModel: IArmed, IDamageable
         //order of initilaization is based on object graph, if object A is injected into B A is initalized first !
 
         RxPlayerName = new ReactiveProperty<string>(playerSettings.playerName);        
-        RxPlayerSpeed = new ReactiveProperty<int>(playerSettings.speed);
+        RxShipSpeed = new ReactiveProperty<int>(playerSettings.playerShipSpeed);
         RxPlayerScore = new ReactiveProperty<int>(playerSettings.initialScore);
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 

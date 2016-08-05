@@ -87,6 +87,10 @@ NavMeshSettings:
     cellSize: .166666657
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &214573506 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 469758, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+  m_PrefabInternal: {fileID: 1705633950}
 --- !u!1001 &357447887
 Prefab:
   m_ObjectHideFlags: 0
@@ -2262,6 +2266,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11448986, guid: bd826c6215798e74da3a293061f114f4, type: 2}
+      propertyPath: shotSpawn
+      value: 
+      objectReference: {fileID: 214573506}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd826c6215798e74da3a293061f114f4, type: 2}
   m_IsPrefabParent: 0
@@ -3687,6 +3695,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11488888, guid: dbefb112f07f520409888c768560ded1, type: 2}
+      propertyPath: shotSpawn
+      value: 
+      objectReference: {fileID: 2113887404}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbefb112f07f520409888c768560ded1, type: 2}
   m_IsPrefabParent: 0
@@ -3787,16 +3799,12 @@ MonoBehaviour:
   sceneSettings:
     playerSettings:
       playerName: Starlord
-      speed: 10
+      playerShipSpeed: 10
       initialScore: 0
-      shipSettings:
-        score: 0
-        health: 0
-        speed: 10
-        weaponSettings:
-        - bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
-          fireRate: .5
-          bulletSpeed: 10
+      weaponSettings:
+        bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
+        fireRate: .100000001
+        bulletSpeed: 20
     enemySettings:
       score: 10
       health: 0
@@ -3959,6 +3967,10 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!4 &2113887404 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 449922, guid: dbefb112f07f520409888c768560ded1, type: 2}
+  m_PrefabInternal: {fileID: 1847813318}
 --- !u!1 &2114136208
 GameObject:
   m_ObjectHideFlags: 0

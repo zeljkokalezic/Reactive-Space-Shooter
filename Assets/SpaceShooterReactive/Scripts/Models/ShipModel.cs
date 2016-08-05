@@ -4,7 +4,6 @@ using UniRx;
 using System;
 using Zenject;
 
-//not used, to be implemented if need arises
 public class ShipModel : IArmed, IDamageable
 {
     public enum ShipState { Inactive, Active }

@@ -18,8 +18,6 @@ public class WeaponPresenter : MonoBehaviour
     [Inject]
     private WeaponBulletPresenter.Factory weaponBulletPresenterFactory;
 
-    private float nextFire;
-
     [PostInject]
     void Initialize()
     {
