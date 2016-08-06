@@ -22,6 +22,9 @@ public class WeaponBulletPresenter : MonoBehaviour
     [Inject]
     public WeaponModel Model { get; private set; }
 
+    [Inject]
+    protected readonly SimpleComponentFactory componentFactory;
+
     // Use this for initialization
     [PostInject]
     void InitializePresenter()
@@ -33,8 +36,7 @@ public class WeaponBulletPresenter : MonoBehaviour
         GetComponent<Rigidbody>().velocity = transform.forward * Model.RxWeaponBulletSpeed.Value;
 
         this.gameObject.OnTriggerEnterAsObservable()
-            .Subscribe(other =>
-            {
+            .Subscribe(other => {
                 var enemy = other.GetComponent<Damageable>();
                 if (enemy != null)
                 {
@@ -54,9 +56,10 @@ public class WeaponBulletPresenter : MonoBehaviour
             }).AddTo(this);
 
         Observable.Interval(TimeSpan.FromSeconds(5))
-           .Subscribe(x =>
-           {
+           .Subscribe(x => {
                Destroy(this.gameObject);
            }).AddTo(this);
+
+        componentFactory.Create<DestroyOnGameOver>(this.gameObject);
     }
 }

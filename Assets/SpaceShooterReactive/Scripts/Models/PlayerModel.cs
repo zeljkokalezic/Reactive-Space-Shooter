@@ -27,7 +27,7 @@ public class PlayerModel: IArmed, IDamageable
     public ReactiveProperty<int> RxScore { get; set; }
 
     public WeaponModel PlayerWeapon { get; private set; }
-    public ShipModel PlayerShip { get; private set; }
+    //public ShipModel PlayerShip { get; private set; }
 
     [Inject]
     public PlayerModel(Settings playerSettings, WeaponModel.Factory weaponFactory)
@@ -52,6 +52,7 @@ public class PlayerModel: IArmed, IDamageable
     {
         RxPlayerState.Value = PlayerState.Active;
         PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;//activate weapon
+        RxPlayerScore.Value = 0;//clear score
     }
 
     internal void Deactivate()

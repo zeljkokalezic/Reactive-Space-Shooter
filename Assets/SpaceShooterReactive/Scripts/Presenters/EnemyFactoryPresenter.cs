@@ -19,6 +19,8 @@ public class EnemyFactoryPresenter : MonoBehaviour
     [Inject]
     private EnemyModel.Settings enemyModelDefaultSettings;
 
+    private double spawnRate = 1;
+
     public GameObject[] asteroids;
 
     public GameObject[] ships;
@@ -26,7 +28,7 @@ public class EnemyFactoryPresenter : MonoBehaviour
     [PostInject]
     void Initialize()
     {
-        Observable.Interval(TimeSpan.FromSeconds(1))
+        Observable.Interval(TimeSpan.FromSeconds(spawnRate))
             .Where(_ => game.RxGameState.Value == GameModel.GameState.InProgress)
             .Subscribe(x =>
                 {

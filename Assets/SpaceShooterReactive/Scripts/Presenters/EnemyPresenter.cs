@@ -39,8 +39,7 @@ public class EnemyPresenter : MonoBehaviour
         this.transform.position = new Vector3(UnityEngine.Random.Range(-settings.spawnPosition.x, settings.spawnPosition.x), settings.spawnPosition.y, settings.spawnPosition.z);
 
         this.gameObject.OnTriggerEnterAsObservable()
-            .Subscribe(other =>
-            {
+            .Subscribe(other => {
                 var bullet = other.GetComponent<WeaponBulletPresenter>();
                 if (bullet != null && bullet.Model.WeaponOwner.GetType() == Model.GetType())//disable frendly fire
                 {
@@ -54,13 +53,12 @@ public class EnemyPresenter : MonoBehaviour
             }).AddTo(this);
 
         Observable.Interval(TimeSpan.FromSeconds(10))
-           .Subscribe(x =>
-           {
+           .Subscribe(x => {
                Destroy(this.gameObject);
-           })
-           .AddTo(this);
+           }).AddTo(this);
 
         componentFactory.Create<Damageable>(this.gameObject, Model);
+        componentFactory.Create<DestroyOnGameOver>(this.gameObject);
 
         switch (Model.RxEnemyType.Value)
         {

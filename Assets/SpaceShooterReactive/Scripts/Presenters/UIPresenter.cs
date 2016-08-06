@@ -10,6 +10,7 @@ public class UIPresenter : MonoBehaviour
 {
 
     public Button actionButton;
+    public Text actionButtonText;
     public Text infoLabel;
     public Text scoreLabel;
 
@@ -27,16 +28,20 @@ public class UIPresenter : MonoBehaviour
         Assert.IsNotNull(scoreLabel);
         Assert.IsNotNull(infoLabel);
 
+        //TODO: extract strings to config file later
+        actionButtonText.text = "Start Game";
         scoreLabel.enabled = false;
-        player.RxPlayerScore.Subscribe(x => scoreLabel.text = "Score: " + x).AddTo(this);
 
+        player.RxPlayerScore.Subscribe(x => scoreLabel.text = "Score: " + x).AddTo(this);
         player.RxPlayerName.Subscribe(x => infoLabel.text = "Welcome " + x).AddTo(this);
 
         game.RxGameState
             .Where(x => x == GameModel.GameState.GameOver)
             .Subscribe(x => {
+                actionButtonText.text = "Restart";
                 infoLabel.text = "Game Over";
                 infoLabel.enabled = true;
+                actionButton.Visible(true);
             }).AddTo(this);
 
         //player.RxPlayerFireRate.Subscribe(x => Debug.Log(x)).AddTo(this);

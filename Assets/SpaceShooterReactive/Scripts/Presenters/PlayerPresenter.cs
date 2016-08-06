@@ -17,6 +17,8 @@ public class PlayerPresenter : MonoBehaviour
     
     public Transform shotSpawn;
 
+    private Vector3 startPosition;
+
     [Inject]
     protected readonly SimpleComponentFactory componentFactory;
 
@@ -40,13 +42,25 @@ public class PlayerPresenter : MonoBehaviour
         componentFactory.Create<WeaponTriggerButton>(this.gameObject, Model.PlayerWeapon, "Fire1");
         componentFactory.Create<Damageable>(this.gameObject, Model);
 
+        startPosition = this.transform.position;
+
         Model.RxPlayerState
             .Where(x => x == PlayerModel.PlayerState.Dead)
             .Subscribe(x =>
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Instantiate(settings.playerExplosion, this.transform.position, this.transform.rotation);
-                ToggleVisibility();//TODO: disable the colider also
+                SetVisiblity(false);
+            }).AddTo(this);
+
+        Model.RxPlayerState
+            .Where(x => x == PlayerModel.PlayerState.Active)
+            .Subscribe(x =>
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Debug.Log(startPosition);
+                this.transform.position = startPosition;
+                SetVisiblity(true);
             }).AddTo(this);
 
         //should we move the colison handling to the damageable component ?
@@ -61,13 +75,12 @@ public class PlayerPresenter : MonoBehaviour
             }).AddTo(this);
     }
 
-    void ToggleVisibility()
+    void SetVisiblity(bool visible)
     {
-        // toggles the visibility of this gameobject and all it's children
         var renderers = gameObject.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in renderers)
         {
-            r.enabled = !r.enabled;
+            r.enabled = visible;
         }
     }
 }
