@@ -16,6 +16,8 @@ public class WeaponModel
         public GameObject bullet;
         public float fireRate;
         public float bulletSpeed;
+        //this can be separate damage descriptor with damage tables (armor x, shiled x, hull x, etc...)
+        public float damage;
     }
 
     public enum WeaponState { Inactive, Active }

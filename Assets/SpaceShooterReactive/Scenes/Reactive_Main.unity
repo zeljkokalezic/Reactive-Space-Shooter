@@ -1632,10 +1632,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1200347498}
   m_RootOrder: 0
---- !u!4 &744317413 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
-  m_PrefabInternal: {fileID: 1847813318}
 --- !u!1 &803755659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,6 +1874,10 @@ MonoBehaviour:
   - {fileID: 177028, guid: aef0ea3c0dba16c41992dd6bc6c07b8f, type: 2}
   ships:
   - {fileID: 123412, guid: b8ced230542717d42b05bffbf651a525, type: 2}
+--- !u!4 &1375793727 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
+  m_PrefabInternal: {fileID: 1802432784}
 --- !u!1 &1461320654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,7 +2282,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 406874, guid: bd826c6215798e74da3a293061f114f4, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 191184, guid: bd826c6215798e74da3a293061f114f4, type: 2}
       propertyPath: m_IsActive
@@ -3678,56 +3678,91 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!1001 &1847813318
+--- !u!1001 &1802432784
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 1942318415}
     m_Modifications:
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 493544, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 429236, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 100902, guid: dbefb112f07f520409888c768560ded1, type: 2}
+    - target: {fileID: 198412, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11488888, guid: dbefb112f07f520409888c768560ded1, type: 2}
-      propertyPath: shotSpawn
-      value: 
-      objectReference: {fileID: 2113887404}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: dbefb112f07f520409888c768560ded1, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1846252694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1846252695}
+  - 114: {fileID: 1846252696}
+  m_Layer: 0
+  m_Name: PlayerPresenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1846252695
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1846252694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1942318415}
+  m_RootOrder: 2
+--- !u!114 &1846252696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1846252694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8232699846593c47bb535efe132b43e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1855741199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3831,12 +3866,24 @@ MonoBehaviour:
   sceneSettings:
     playerSettings:
       playerName: Starlord
-      playerShipSpeed: 10
       initialScore: 0
-      weaponSettings:
-        bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
-        fireRate: .100000001
-        bulletSpeed: 20
+      shipSettings:
+        score: 0
+        health: 1
+        speed: 10
+        shipPrefab: {fileID: 198412, guid: 0ffc1e05d2ed62243a5b33ee725b7a0b, type: 2}
+        shipPresenterSettings:
+          shipExplosion: {fileID: 170100, guid: 0c0ef47bb91af774494a3d6f817cf17a,
+            type: 2}
+        weaponSettings:
+        - bullet: {fileID: 167078, guid: cdfa5d9f524142f489ff50f483cf9846, type: 2}
+          fireRate: .5
+          bulletSpeed: 15
+          damage: .5
+        - bullet: {fileID: 164042, guid: 26fd8bd80f1131b4b9e1cc53daadf09f, type: 2}
+          fireRate: .5
+          bulletSpeed: 15
+          damage: .5
     enemySettings:
       score: 10
       health: 0
@@ -3844,11 +3891,10 @@ MonoBehaviour:
         bullet: {fileID: 164042, guid: 26fd8bd80f1131b4b9e1cc53daadf09f, type: 2}
         fireRate: .200000003
         bulletSpeed: 10
+        damage: 0
     enemyPresenterSettings:
       spawnPosition: {x: 6, y: 0, z: 16}
       explosion: {fileID: 191524, guid: 29dd30e1e27fcf046abc41cc1c568fb0, type: 2}
-    playerPresenterSettings:
-      playerExplosion: {fileID: 170100, guid: 0c0ef47bb91af774494a3d6f817cf17a, type: 2}
     shipDriverPlayerSettings:
       boundary:
         xMin: -6
@@ -3901,7 +3947,8 @@ Transform:
   m_Children:
   - {fileID: 1286168939}
   - {fileID: 803755661}
-  - {fileID: 744317413}
+  - {fileID: 1846252695}
+  - {fileID: 1375793727}
   - {fileID: 1705633951}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3999,10 +4046,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!4 &2113887404 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 449922, guid: dbefb112f07f520409888c768560ded1, type: 2}
-  m_PrefabInternal: {fileID: 1847813318}
 --- !u!1 &2114136208
 GameObject:
   m_ObjectHideFlags: 0

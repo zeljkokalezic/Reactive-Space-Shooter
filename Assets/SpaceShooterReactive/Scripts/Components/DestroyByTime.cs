@@ -10,6 +10,6 @@ public class DestroyByTime : MonoBehaviour
     [PostInject]
     void InitializeComponent()
     {
-		Destroy (gameObject, lifetime);
+		Destroy(gameObject, lifetime);
 	}
 }

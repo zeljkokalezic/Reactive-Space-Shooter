@@ -4,43 +4,43 @@ using UniRx;
 using System;
 using Zenject;
 
-public class PlayerModel: IArmed, IDamageable
+public class PlayerModel: IArmed, IDamageable, IShipOwner
 {
     [Serializable]
     public class Settings
     {
         public string playerName;
-        public int playerShipSpeed;
         public int initialScore;
-        public WeaponModel.Settings weaponSettings;
+        public ShipModel.Settings shipSettings;
+
     }
 
     public enum PlayerState { Inactive, Active, Dead }
 
     public ReactiveProperty<PlayerState> RxPlayerState { get; private set; }
     public ReactiveProperty<string> RxPlayerName { get; private set; }
-    public ReactiveProperty<int> RxShipSpeed { get; private set; }
     public ReactiveProperty<int> RxPlayerScore { get; private set; }
 
-    //IDamageable
     public ReactiveProperty<int> RxHealth { get; set; }
     public ReactiveProperty<int> RxScore { get; set; }
 
-    public WeaponModel PlayerWeapon { get; private set; }
-    //public ShipModel PlayerShip { get; private set; }
+    public ShipModel PlayerShip { get; private set; }
+
+    public Settings ModelSettings { get; private set; }
+
 
     [Inject]
-    public PlayerModel(Settings playerSettings, WeaponModel.Factory weaponFactory)
+    public PlayerModel(Settings playerSettings, ShipModel.Factory shipFactory)
     {
         //order of initilaization is based on object graph, if object A is injected into B A is initalized first !
 
+        ModelSettings = playerSettings;
+
         RxPlayerName = new ReactiveProperty<string>(playerSettings.playerName);        
-        RxShipSpeed = new ReactiveProperty<int>(playerSettings.playerShipSpeed);
         RxPlayerScore = new ReactiveProperty<int>(playerSettings.initialScore);
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 
-        //now we have ability to instantiate multiple weapons
-        PlayerWeapon = weaponFactory.Create(this, playerSettings.weaponSettings);
+        PlayerShip = shipFactory.Create(this, playerSettings.shipSettings);
     }
 
     internal void ChangeName(string p)
@@ -51,14 +51,17 @@ public class PlayerModel: IArmed, IDamageable
     internal void Activate()
     {
         RxPlayerState.Value = PlayerState.Active;
-        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;//activate weapon
-        RxPlayerScore.Value = 0;//clear score
+        RxPlayerScore.Value = 0;
+        //Activate the ship
+        //Do this trough ShipOwner interface later (decoupling) ?
+        PlayerShip.Activate();
     }
 
     internal void Deactivate()
     {
-        RxPlayerState.Value = PlayerState.Dead;//do we need the inactive state ?
-        PlayerWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Inactive;
+        RxPlayerState.Value = PlayerState.Dead;
+        //should the ship deactivate itself ?
+        PlayerShip.Deactivate();
     }
 
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)

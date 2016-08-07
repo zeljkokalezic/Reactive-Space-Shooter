@@ -91,12 +91,12 @@ public class PanelManager : MonoBehaviour {
 
 	private void SetSelected(GameObject go)
 	{
-		EventSystem.current.SetSelectedGameObject(go);
+		//EventSystem.current.SetSelectedGameObject(go);
 
-		var standaloneInputModule = EventSystem.current.currentInputModule as StandaloneInputModule;
-		if (standaloneInputModule != null && standaloneInputModule.inputMode == StandaloneInputModule.InputMode.Buttons)
-			return;
+		//var standaloneInputModule = EventSystem.current.currentInputModule as StandaloneInputModule;
+		//if (standaloneInputModule != null && standaloneInputModule.inputMode == StandaloneInputModule.InputMode.Buttons)
+		//	return;
 
-		EventSystem.current.SetSelectedGameObject(null);
+		//EventSystem.current.SetSelectedGameObject(null);
 	}
 }
