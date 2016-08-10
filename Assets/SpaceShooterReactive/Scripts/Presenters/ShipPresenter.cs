@@ -58,6 +58,7 @@ public class ShipPresenter : MonoBehaviour
             .Where(x => x == ShipModel.ShipState.Dead)
             .Subscribe(x =>
             {
+                GetComponent<MeshCollider>().enabled = false;
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Instantiate(settings.shipExplosion, this.transform.position, this.transform.rotation);
                 SetVisiblity(false);
@@ -67,6 +68,7 @@ public class ShipPresenter : MonoBehaviour
             .Where(x => x == ShipModel.ShipState.Active)
             .Subscribe(x =>
             {
+                GetComponent<MeshCollider>().enabled = true;
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.transform.position = startPosition;
                 SetVisiblity(true);

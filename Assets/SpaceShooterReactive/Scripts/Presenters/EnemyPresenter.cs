@@ -9,7 +9,6 @@ using UniRx.Triggers;
 
 public class EnemyPresenter : MonoBehaviour
 {
-    //pass the enemy model in future interation
     public class Factory : PrefabFactory<EnemyModel, EnemyPresenter>
     {
     }
@@ -17,8 +16,9 @@ public class EnemyPresenter : MonoBehaviour
     [Serializable]
     public class Settings
     {
-        public Vector3 spawnPosition;
+
         public GameObject explosion;
+        public GameObject healthBar;
     }
     public Transform shotSpawn;
 
@@ -31,25 +31,26 @@ public class EnemyPresenter : MonoBehaviour
     [Inject]
     protected readonly SimpleComponentFactory componentFactory;
 
+    [Inject]
+    protected readonly HealthBar.Factory healthBarFactory;
+
     // Use this for initialization
     [PostInject]
     void InitializePresenter()
     {
-        //should the spawner set the enemy position, or set the value in tne enemy model and then the presenter reads from there ?
-        this.transform.position = new Vector3(UnityEngine.Random.Range(-settings.spawnPosition.x, settings.spawnPosition.x), settings.spawnPosition.y, settings.spawnPosition.z);
+        var healthBar = healthBarFactory.Create(settings.healthBar, Model);
+        healthBar.Hide();
+        healthBar.transform.SetParent(this.gameObject.transform);
 
-        this.gameObject.OnTriggerEnterAsObservable()
-            .Subscribe(other => {
-                var bullet = other.GetComponent<WeaponBulletPresenter>();
-                if (bullet != null && bullet.Model.WeaponOwner.GetType() == Model.GetType())//disable frendly fire
-                {
-                    
-                }
-                else
-                {
-                    Instantiate(settings.explosion, other.transform.position, other.transform.rotation);
-                    Destroy(this.gameObject);
-                }
+        //this.gameObject.OnTriggerEnterAsObservable()
+        //    .Subscribe(other => {
+        //    }).AddTo(this);
+
+        Model.RxHealth
+            .Where(x => x <= 0)
+            .Subscribe(x => {
+                Instantiate(settings.explosion, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject, 0.1f);
             }).AddTo(this);
 
         Observable.Interval(TimeSpan.FromSeconds(10))
@@ -66,7 +67,6 @@ public class EnemyPresenter : MonoBehaviour
                 break;
             case EnemyModel.Type.Ship:
                 Model.EnemyWeapon.RxWeaponMountPoint.Value = shotSpawn;
-                //Model.EnemyWeapon.RxWeaponFiring.Value = true;
                 Model.EnemyWeapon.RxWeaponState.Value = WeaponModel.WeaponState.Active;
                 componentFactory.Create<Mover>(this.gameObject, -5f);
                 componentFactory.Create<ShipDriverAI>(this.gameObject);

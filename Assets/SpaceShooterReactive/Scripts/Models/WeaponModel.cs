@@ -17,7 +17,7 @@ public class WeaponModel
         public float fireRate;
         public float bulletSpeed;
         //this can be separate damage descriptor with damage tables (armor x, shiled x, hull x, etc...)
-        public float damage;
+        public int damage;
     }
 
     public enum WeaponState { Inactive, Active }
@@ -27,6 +27,7 @@ public class WeaponModel
     public ReactiveProperty<GameObject> RxWeaponBullet { get; private set; }
     public ReactiveProperty<float> RxWeaponFireRate { get; private set; }
     public ReactiveProperty<float> RxWeaponBulletSpeed { get; private set; }
+    public ReactiveProperty<int> RxWeaponDamage { get; private set; }
     public ReactiveProperty<bool> RxWeaponFiring { get; private set; }
 
     private float nextFireTime;
@@ -42,6 +43,7 @@ public class WeaponModel
         RxWeaponState = new ReactiveProperty<WeaponState>(WeaponState.Inactive);
         RxWeaponFireRate = new ReactiveProperty<float>(weaponSettings.fireRate);
         RxWeaponBulletSpeed = new ReactiveProperty<float>(weaponSettings.bulletSpeed);
+        RxWeaponDamage = new ReactiveProperty<int>(weaponSettings.damage);
         RxWeaponFiring = new ReactiveProperty<bool>(false);
     }
 

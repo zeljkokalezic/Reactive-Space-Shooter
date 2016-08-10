@@ -7,6 +7,7 @@ using Zenject;
 using UnityEngine.Assertions;
 using UniRx.Triggers;
 
+//should we make the bullets "dumb" (handle colisions in target with a componenet not in bullet) ?
 public class WeaponBulletPresenter : MonoBehaviour
 {
     public class Factory : PrefabFactory<WeaponModel, WeaponBulletPresenter>
@@ -40,8 +41,13 @@ public class WeaponBulletPresenter : MonoBehaviour
                 var enemy = other.GetComponent<Damageable>();
                 if (enemy != null)
                 {
-                    Model.Hit(enemy.Model);
-                    enemy.Model.HitByWeapon(Model, Model.WeaponOwner);
+                    if (enemy.Model.RxHealth.Value > 0)
+                    {
+                        //first hit by weapon to deduct damage
+                        enemy.Model.HitByWeapon(Model, Model.WeaponOwner);
+                        //then signal hit
+                        Model.Hit(enemy.Model);
+                    }
                 }
 
                 //actors of same type does not hit each other (enemy-enemy, bullet-bullet)

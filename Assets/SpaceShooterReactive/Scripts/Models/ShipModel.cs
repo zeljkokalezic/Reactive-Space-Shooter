@@ -86,9 +86,9 @@ public class ShipModel : IArmed, IDamageable
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
         //we should deduct weapon damage here
-        if (RxHealth.Value == 0)
+        RxHealth.Value -= weaponModel.RxWeaponDamage.Value;
+        if (RxHealth.Value <= 0)
         {
-            Debug.Log(weaponModel);
             Deactivate();
         }
         (ShipOwner as IDamageable).HitByWeapon(weaponModel, other);

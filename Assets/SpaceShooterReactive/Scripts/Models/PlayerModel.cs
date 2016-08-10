@@ -41,6 +41,8 @@ public class PlayerModel: IArmed, IDamageable, IShipOwner
         RxPlayerState = new ReactiveProperty<PlayerState>(PlayerState.Inactive);
 
         PlayerShip = shipFactory.Create(this, playerSettings.shipSettings);
+
+        PlayerShip.RxShipState.Where(x => x == ShipModel.ShipState.Dead).Subscribe(x => { Deactivate(); });
     }
 
     internal void ChangeName(string p)
@@ -61,20 +63,23 @@ public class PlayerModel: IArmed, IDamageable, IShipOwner
     {
         RxPlayerState.Value = PlayerState.Dead;
         //should the ship deactivate itself ?
-        PlayerShip.Deactivate();
-    }
-
-    public void HitByWeapon(WeaponModel weaponModel, IArmed other)
-    {
-        Deactivate();
+        //PlayerShip.Deactivate();
     }
 
     public void WeaponHit(WeaponModel weaponModel, IDamageable other)
     {
-        //should the interface hold the health or just state (dead/alive) ?
-        if (other.RxHealth.Value == 0)//if the enemy is dead increase the score
+        //should the interface hold the health or just state (dead/alive) ? - STATE !
+        //check the order of events
+        Debug.Log(other.RxHealth.Value);
+        if (other.RxHealth.Value <= 0)//if the enemy is dead increase the score
         {
             RxPlayerScore.Value += other.RxScore.Value;
         }
+    }
+
+    public void HitByWeapon(WeaponModel weaponModel, IArmed other)
+    {
+        //ship is hit not the player
+        //Deactivate();
     }
 }
