@@ -21,7 +21,7 @@ public class ShipDriverPlayer : MonoBehaviour
     }
 
     [Inject]
-    private PlayerModel Model;
+    private ShipModel Model;
 
     [Inject]
     private Settings settings;
@@ -30,7 +30,7 @@ public class ShipDriverPlayer : MonoBehaviour
 	void InitializeComponent ()
 	{
         this.gameObject.FixedUpdateAsObservable()
-            .Where(_ => Model.RxPlayerState.Value == PlayerModel.PlayerState.Active)
+            .Where(_ => Model.RxShipState.Value == ShipModel.ShipState.Active)
             .Subscribe(x =>
             {
                 float moveHorizontal = Input.GetAxis("Horizontal");

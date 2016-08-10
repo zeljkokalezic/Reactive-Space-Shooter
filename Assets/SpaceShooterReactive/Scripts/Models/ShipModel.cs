@@ -6,7 +6,10 @@ using Zenject;
 
 public class ShipModel : IArmed, IDamageable
 {
-    public enum ShipState { Inactive, Active }
+    public enum ShipState { Inactive, Active, Dead }
+
+    //NO !!!
+    //Use inheritance/composition
     public enum ShipType { Player, AI }
 
     public class Factory : Factory<IShipOwner, Settings, ShipModel>
@@ -14,23 +17,27 @@ public class ShipModel : IArmed, IDamageable
     }
 
     [Serializable]
+
     public class Settings
     {
+        //We should extract IScorable later
+        //why does ship has a score ?
         public int score; //move this to a component ?
         public int health;
         public int speed;
-        public ShipType shipType;
+        public GameObject shipPrefab;
+        public ShipPresenter.Settings shipPresenterSettings;
         public WeaponModel.Settings[] weaponSettings;
     }
 
     public ReactiveProperty<ShipState> RxShipState { get; private set; }
-    public ReactiveProperty<ShipType> RxShipType { get; private set; }
     public ReactiveProperty<int> RxShipSpeed { get; private set; }
 
     //IDamageable
     public ReactiveProperty<int> RxHealth { get; set; }
     public ReactiveProperty<int> RxScore { get; set; }
 
+    //On ship owner deactivation deactivate the ship !
     [Inject]
     public IShipOwner ShipOwner { get; private set; }
 
@@ -40,8 +47,7 @@ public class ShipModel : IArmed, IDamageable
     public ShipModel(Settings settings, WeaponModel.Factory weaponFactory)
     {
         RxShipState = new ReactiveProperty<ShipState>(ShipState.Inactive);
-        RxShipType = new ReactiveProperty<ShipType>(settings.shipType);
-        RxScore = new ReactiveProperty<int>(settings.score);//to we need to extract this into IScorable for example ?
+        RxScore = new ReactiveProperty<int>(settings.score);
         RxHealth = new ReactiveProperty<int>(settings.health);
         RxShipSpeed = new ReactiveProperty<int>(settings.speed);
 
@@ -56,23 +62,35 @@ public class ShipModel : IArmed, IDamageable
     internal void Activate()
     {
         RxShipState.Value = ShipState.Active;
+        for (int i = 0; i < ShipWeapons.Length; i++)
+        {
+            ShipWeapons[i].RxWeaponState.Value = WeaponModel.WeaponState.Active;
+        }
     }
 
     internal void Deactivate()
     {
-        RxShipState.Value = ShipState.Inactive;
+        RxShipState.Value = ShipState.Dead;
+        for (int i = 0; i < ShipWeapons.Length; i++)
+        {
+            ShipWeapons[i].RxWeaponState.Value = WeaponModel.WeaponState.Inactive;
+        }
     }
 
     public void WeaponHit(WeaponModel weaponModel, IDamageable other)
     {
-        
+        //report hit to owner also
+        (ShipOwner as IArmed).WeaponHit(weaponModel, other);
     }
 
     public void HitByWeapon(WeaponModel weaponModel, IArmed other)
     {
-        if (RxHealth.Value == 0)
+        //we should deduct weapon damage here
+        RxHealth.Value -= weaponModel.RxWeaponDamage.Value;
+        if (RxHealth.Value <= 0)
         {
             Deactivate();
-        }        
+        }
+        (ShipOwner as IDamageable).HitByWeapon(weaponModel, other);
     }
 }

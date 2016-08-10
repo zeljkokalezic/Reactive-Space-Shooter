@@ -44,13 +44,12 @@ public class UIPresenter : MonoBehaviour
                 actionButton.Visible(true);
             }).AddTo(this);
 
-        //player.RxPlayerFireRate.Subscribe(x => Debug.Log(x)).AddTo(this);
-
-        actionButton.onClick.AsObservable().Subscribe(_ =>
-        {
+        actionButton.onClick.AsObservable().Subscribe(_ => {
+            //game state should trigger these UI changes not button click
             scoreLabel.enabled = true;
             infoLabel.enabled = false;
             actionButton.Visible(false);
+
             game.StartGame();
         }).AddTo(this);
     }

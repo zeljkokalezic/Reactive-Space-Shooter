@@ -9,6 +9,7 @@ using UniRx;
 /// </summary>
 public interface IDamageable
 {
+    //use int, there can be precision problems with float
     ReactiveProperty<int> RxHealth { get; set; }
     ReactiveProperty<int> RxScore { get; set; }
     void HitByWeapon(WeaponModel weaponModel, IArmed other);

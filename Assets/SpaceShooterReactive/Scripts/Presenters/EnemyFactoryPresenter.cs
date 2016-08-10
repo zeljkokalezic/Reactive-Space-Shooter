@@ -19,7 +19,8 @@ public class EnemyFactoryPresenter : MonoBehaviour
     [Inject]
     private EnemyModel.Settings enemyModelDefaultSettings;
 
-    private double spawnRate = 1;
+    private double spawnRate = 3;
+    public Vector3 spawnPosition;
 
     public GameObject[] asteroids;
 
@@ -32,7 +33,7 @@ public class EnemyFactoryPresenter : MonoBehaviour
             .Where(_ => game.RxGameState.Value == GameModel.GameState.InProgress)
             .Subscribe(x =>
                 {
-                    var enemyType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(EnemyModel.Type)).Length);                    
+                    var enemyType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(EnemyModel.Type)).Length);
                     var model = enemyModelFactory.Create(enemyModelDefaultSettings, (EnemyModel.Type)enemyType);
                     switch (model.RxEnemyType.Value)
                     {
@@ -53,6 +54,7 @@ public class EnemyFactoryPresenter : MonoBehaviour
     private void CreateEnemy(EnemyModel model, GameObject[] prefabs)
     {
         var randomNumber = UnityEngine.Random.Range(0, prefabs.Length);
-        enemyPresenterFactory.Create(prefabs[randomNumber], model);
+        var enemyPresenter = enemyPresenterFactory.Create(prefabs[randomNumber], model);
+        enemyPresenter.transform.position = new Vector3(UnityEngine.Random.Range(-spawnPosition.x, spawnPosition.x), spawnPosition.y, spawnPosition.z);
     }
 }

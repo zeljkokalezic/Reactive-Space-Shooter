@@ -17,8 +17,7 @@ public class WeaponTriggerButton : MonoBehaviour
 	{
         this.gameObject.UpdateAsObservable()
             .Where(x => Model.RxWeaponState.Value == WeaponModel.WeaponState.Active && Input.GetButton(buttonName))
-            .Subscribe(x =>
-            {
+            .Subscribe(x => {
                 Model.Fire();
             }).AddTo(this);
     }

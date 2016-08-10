@@ -9,5 +9,5 @@ public class Damageable : MonoBehaviour
     }
 
     [Inject]
-    public IDamageable Model;    
+    public IDamageable Model;
 }
